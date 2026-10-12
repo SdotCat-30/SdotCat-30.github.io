@@ -103,16 +103,22 @@ i { font-style: italic; }
 }
 
 /* ---------- two-column layout ---------- */
-.layout { display: grid; grid-template-columns: var(--side) minmax(0, 1fr); gap: 64px; padding-block: 56px 0; align-items: start; }
-@media (max-width: 980px) { .layout { grid-template-columns: minmax(0, 1fr); gap: 8px; padding-top: 32px; } }
+/* content on the left, profile column on the right, so the page opens straight into About */
+.layout { display: grid; grid-template-columns: minmax(0, 1fr) var(--side); gap: 64px; padding-block: 56px 0; align-items: start; }
+@media (max-width: 980px) { .layout { --side: 196px; gap: 36px; padding-top: 40px; } }
+@media (max-width: 720px) { .layout { --side: 150px; gap: 24px; } .layout .author-links { font-size: 0.84rem; } .layout .author-links li, .layout .author-links a { gap: 8px; } }
+@media (max-width: 520px) { .layout { grid-template-columns: minmax(0, 1fr); gap: 8px; padding-top: 28px; } }
 
-/* author sidebar */
-.author { position: sticky; top: 96px; display: grid; gap: 14px; align-content: start; }
-.avatar { width: 176px; aspect-ratio: 1; border-radius: 50%; overflow: hidden; margin-bottom: 6px; box-shadow: 0 0 0 3px var(--bg), 0 0 0 5px var(--red), 0 0 0 7px var(--bg), 0 0 0 8px var(--navy); }
-.avatar img { width: 100%; height: 100%; object-fit: cover; }
-.author h1 { font-size: 1.6rem; }
-.author .role { font: italic 500 1.08rem/1.35 var(--font-display); color: var(--navy); margin-top: -6px; }
-.author .bio { font-size: 0.92rem; line-height: 1.6; color: var(--muted); }
+/* profile column */
+.author { position: sticky; top: 96px; display: grid; gap: 12px; align-content: start; }
+.headshot { position: relative; margin: 0 0 8px; }
+.headshot img { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; border-radius: 6px; }
+.headshot::after { /* crimson-over-blue edge, like the Nepal flag's border */
+  content: ""; position: absolute; left: 10%; right: 10%; bottom: -8px; height: 3px;
+  background: linear-gradient(var(--red) 0 2px, var(--navy) 2px 3px);
+}
+.author h1 { font-size: 1.5rem; margin-top: 8px; }
+.author .role { font: italic 500 1.06rem/1.35 var(--font-display); color: var(--navy); margin-top: -4px; }
 .author-links { list-style: none; margin: 4px 0 0; padding: 12px 0 0; border-top: 1px solid var(--rule); display: grid; gap: 1px; font-size: 0.92rem; }
 .author-links li { display: flex; align-items: center; gap: 10px; min-height: 32px; color: var(--muted); }
 .author-links a { display: flex; align-items: center; gap: 10px; min-height: 32px; color: var(--ink); text-decoration: none; }
@@ -120,12 +126,18 @@ i { font-style: italic; }
 .ico { width: 17px; height: 17px; flex: none; color: var(--faint); }
 .author-links a:hover .ico.line { color: var(--red-ink); }
 @media (max-width: 980px) {
-  .author { position: static; grid-template-columns: auto minmax(0, 1fr); column-gap: 20px; row-gap: 10px; padding-bottom: 28px; border-bottom: 1px solid var(--rule); }
-  .avatar { width: 104px; grid-row: span 2; align-self: center; margin: 0 0 0 8px; }
-  .author h1 { font-size: 1.5rem; align-self: end; }
-  .author .role { align-self: start; margin-top: 0; }
-  .author .bio, .author-links { grid-column: 1 / -1; }
-  .author-links { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); column-gap: 16px; }
+  .author h1 { font-size: 1.3rem; }
+  .author .role { font-size: 0.98rem; }
+  .author-links { font-size: 0.88rem; }
+}
+/* phones: a compact profile strip above About (photo beside name and title, links in two columns) */
+@media (max-width: 520px) {
+  .author { order: -1; position: static; grid-template-columns: 96px minmax(0, 1fr); column-gap: 18px; row-gap: 6px; padding-bottom: 24px; border-bottom: 1px solid var(--rule); }
+  .headshot { grid-row: span 2; margin: 0; align-self: center; }
+  .headshot::after { bottom: -6px; }
+  .author h1 { font-size: 1.35rem; align-self: end; margin: 0; }
+  .author .role { align-self: start; margin: 0; }
+  .author-links { grid-column: 1 / -1; grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 14px; margin-top: 12px; }
 }
 
 /* ---------- content column ---------- */
@@ -245,23 +257,7 @@ footer::before { content: ""; position: absolute; left: 0; right: 0; top: 0; hei
 
 <div class="wrap layout" id="top">
 
-  <!-- ===== Author sidebar ===== -->
-  <aside class="author" aria-label="About the author">
-    <div class="avatar"><img src="assets/img/avatar.webp" width="480" height="480" alt="Portrait of Sanskar Adhikari outside the Environmental Sciences and Technology building at WKU"></div>
-    <h1>Sanskar Adhikari</h1>
-    <p class="role">Graduate Researcher · Hydroclimatology &amp; Water Resources</p>
-    <p class="bio">M.S. Geoscience student and Graduate Research Assistant, Climate Research Lab, Western Kentucky University.</p>
-    <ul class="author-links">
-      <li><svg class="ico line" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-7-7.6-7-12a7 7 0 0 1 14 0c0 4.4-7 12-7 12z"/><circle cx="12" cy="9" r="2.5"/></svg>Bowling Green, KY</li>
-      <li><svg class="ico line" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 21h18M5 21V10M19 21V10M9.5 21v-7M14.5 21v-7M2 10l10-6 10 6"/></svg>Western Kentucky University</li>
-      <li><a href="mailto:sanskar.adhikari280@topper.wku.edu"><svg class="ico line" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>Email</a></li>
-      <li><a href="https://scholar.google.com/citations?user=SVxeQQUAAAAJ&amp;hl=en" target="_blank" rel="noopener"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path fill="#4285F4" d="M12 3 1 9.5l4 2.36V17c0 .3.1.6.4.8C7.4 19.2 9.6 20 12 20s4.6-.8 6.6-2.2c.3-.2.4-.5.4-.8v-5.14l2-1.18V16h2V9.5z"/><circle cx="12" cy="14" r="2.6" fill="#fff"/></svg>Google Scholar</a></li>
-      <li><a href="https://orcid.org/0009-0004-6719-0520" target="_blank" rel="noopener"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="11" fill="#A6CE39"/><text x="12" y="16.2" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" font-weight="700" fill="#fff">iD</text></svg>ORCID</a></li>
-      <li><a href="https://github.com/SdotCat-30" target="_blank" rel="noopener"><svg class="ico" viewBox="0 0 16 16" aria-hidden="true" style="color:var(--ink)"><path fill="currentColor" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg>GitHub</a></li>
-      <li><a href="https://www.linkedin.com/in/sanskar-adhikari-97b775298/" target="_blank" rel="noopener"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><rect width="24" height="24" rx="4" fill="#0A66C2"/><text x="12" y="17" text-anchor="middle" font-family="Arial, sans-serif" font-size="13" font-weight="700" fill="#fff">in</text></svg>LinkedIn</a></li>
-      <li><a href="assets/Sanskar_Adhikari_CV.pdf" target="_blank" rel="noopener"><svg class="ico line" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 3H6a1 1 0 0 0-1 1v16a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V8z"/><path d="M14 3v5h5M9 13h6M9 17h6"/></svg>Academic CV (PDF)</a></li>
-    </ul>
-  </aside>
+
 
   <main class="content">
 
@@ -270,7 +266,7 @@ footer::before { content: ""; position: absolute; left: 0; right: 0; top: 0; hei
       <h2>About</h2>
       <div class="prose">
         <p class="lede">I investigate extreme rainfall, compound hydroclimatic events, and rain-on-snow processes using climate observations, hydrological modeling, and computational analysis.</p>
-        <p>I'm a graduate student in Geoscience at Western Kentucky University, advised by Dr. Zachary J. Suriano. My M.S. thesis asks whether extreme rainfall in Kentucky's Salt River Basin is becoming more frequent, and how antecedent soil moisture shapes the streamflow response when it does.</p>
+        <p>I'm an M.S. Geoscience student and Graduate Research Assistant in the Climate Research Lab at Western Kentucky University, advised by Dr. Zachary J. Suriano. My thesis asks whether extreme rainfall in Kentucky's Salt River Basin is becoming more frequent, and how antecedent soil moisture shapes the streamflow response when it does.</p>
         <p>Alongside the thesis, I work on hemispheric rain-on-snow events and their surface energy budgets, and on precipitation-frequency estimates from the Kentucky Mesonet. I also served as a teaching assistant for the METR 121 meteorology lab.</p>
         <p>Before WKU, I earned a B.E. in Civil Engineering from Tribhuvan University (IOE Pulchowk Campus) and registered as a civil engineer with the Nepal Engineering Council.</p>
         <div class="news">
@@ -488,6 +484,23 @@ footer::before { content: ""; position: absolute; left: 0; right: 0; top: 0; hei
       </div>
     </section>
   </main>
+
+  <!-- ===== Author sidebar ===== -->
+  <aside class="author" aria-label="About the author">
+    <figure class="headshot"><img src="assets/img/headshot.webp" width="640" height="800" alt="Professional headshot of Sanskar Adhikari"></figure>
+    <h1>Sanskar Adhikari</h1>
+    <p class="role">Graduate Researcher · Hydroclimatology &amp; Water Resources</p>
+    <ul class="author-links">
+      <li><svg class="ico line" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-7-7.6-7-12a7 7 0 0 1 14 0c0 4.4-7 12-7 12z"/><circle cx="12" cy="9" r="2.5"/></svg>Bowling Green, KY</li>
+      <li><svg class="ico line" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 21h18M5 21V10M19 21V10M9.5 21v-7M14.5 21v-7M2 10l10-6 10 6"/></svg>Western Kentucky University</li>
+      <li><a href="mailto:sanskar.adhikari280@topper.wku.edu"><svg class="ico line" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>Email</a></li>
+      <li><a href="https://scholar.google.com/citations?user=SVxeQQUAAAAJ&amp;hl=en" target="_blank" rel="noopener"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path fill="#4285F4" d="M12 3 1 9.5l4 2.36V17c0 .3.1.6.4.8C7.4 19.2 9.6 20 12 20s4.6-.8 6.6-2.2c.3-.2.4-.5.4-.8v-5.14l2-1.18V16h2V9.5z"/><circle cx="12" cy="14" r="2.6" fill="#fff"/></svg>Google Scholar</a></li>
+      <li><a href="https://orcid.org/0009-0004-6719-0520" target="_blank" rel="noopener"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="11" fill="#A6CE39"/><text x="12" y="16.2" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" font-weight="700" fill="#fff">iD</text></svg>ORCID</a></li>
+      <li><a href="https://github.com/SdotCat-30" target="_blank" rel="noopener"><svg class="ico" viewBox="0 0 16 16" aria-hidden="true" style="color:var(--ink)"><path fill="currentColor" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg>GitHub</a></li>
+      <li><a href="https://www.linkedin.com/in/sanskar-adhikari-97b775298/" target="_blank" rel="noopener"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><rect width="24" height="24" rx="4" fill="#0A66C2"/><text x="12" y="17" text-anchor="middle" font-family="Arial, sans-serif" font-size="13" font-weight="700" fill="#fff">in</text></svg>LinkedIn</a></li>
+      <li><a href="assets/Sanskar_Adhikari_CV.pdf" target="_blank" rel="noopener"><svg class="ico line" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 3H6a1 1 0 0 0-1 1v16a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V8z"/><path d="M14 3v5h5M9 13h6M9 17h6"/></svg>Academic CV (PDF)</a></li>
+    </ul>
+  </aside>
 </div>
 
 <footer>
