@@ -78,10 +78,17 @@ i { font-style: italic; }
   content: ""; position: absolute; left: 0; right: 0; bottom: -3px; height: 3px;
   background: linear-gradient(var(--red) 0 2px, var(--navy) 2px 3px);
 }
-.site-head .wrap { display: flex; align-items: center; gap: 28px; min-height: 62px; }
-.brand { display: inline-flex; align-items: center; gap: 10px; font: 600 1.18rem/1 var(--font-display); color: var(--ink); text-decoration: none; white-space: nowrap; }
-.brand:hover { color: var(--ink); }
-.brand svg { width: 16px; height: 20px; flex: none; }
+.site-head .wrap { display: flex; align-items: center; gap: 28px; min-height: 68px; padding-block: 8px; }
+.brand { display: grid; grid-template-columns: auto minmax(0, 1fr); column-gap: 12px; row-gap: 1px; align-items: center; min-width: 0; }
+.brand-flag { grid-row: span 2; display: block; line-height: 0; }
+.brand-flag svg { width: 25px; height: 32px; }
+.brand-name { font: 500 1.16rem/1.15 var(--font-display); color: var(--ink); text-decoration: none; white-space: nowrap; }
+.brand-name:hover { color: var(--red-ink); }
+.brand-sub { font-size: 0.76rem; line-height: 1.35; color: var(--muted); max-width: 360px; }
+@media (max-width: 1200px) { .brand-sub { max-width: none; } }
+.brand-sub a { color: inherit; text-decoration-color: color-mix(in srgb, currentColor 40%, transparent); }
+.brand-sub a:hover { color: var(--red-ink); }
+@media (max-width: 520px) { .brand-sub { display: none; } .brand-flag { grid-row: auto; } .brand-flag svg { width: 18px; height: 23px; } }
 .site-nav { display: flex; gap: 2px; margin-left: auto; overflow-x: auto; scrollbar-width: none; }
 .site-nav::-webkit-scrollbar { display: none; }
 .site-nav a {
@@ -96,7 +103,7 @@ i { font-style: italic; }
 .site-nav a:hover::after, .site-nav a.is-active::after { transform: scaleX(1); }
 .site-nav a.cv-link { color: var(--red-ink); font-weight: 600; }
 .site-nav.more-right { -webkit-mask-image: linear-gradient(90deg, #000 82%, transparent); mask-image: linear-gradient(90deg, #000 82%, transparent); }
-@media (max-width: 980px) {
+@media (max-width: 1200px) {
   .site-head .wrap { flex-direction: column; align-items: stretch; gap: 2px; padding-block: 12px 4px; }
   .site-nav { margin-left: -11px; }
   html { scroll-padding-top: 116px; }
@@ -241,7 +248,23 @@ footer::before { content: ""; position: absolute; left: 0; right: 0; top: 0; hei
 
 <header class="site-head">
   <div class="wrap">
-    <a class="brand" href="#top"><svg viewBox="0 0 17 21" aria-hidden="true"><path d="M1 1 15.5 9.2H6.6L15.5 20H1Z" fill="var(--red)" stroke="var(--navy)" stroke-width="1.6" stroke-linejoin="round"/></svg>Sanskar Adhikari</a>
+    <div class="brand">
+      <a class="brand-flag" href="#top" aria-label="Back to top">
+        <svg viewBox="0 0 96 122" role="img" aria-label="Flag of Nepal">
+          <defs><clipPath id="np-inner"><path d="M5 9 78.6 55H22L84 117H5Z"/></clipPath></defs>
+          <path d="M0 0 96 60H34L96 122H0Z" fill="#003893"/>
+          <path d="M5 9 78.6 55H22L84 117H5Z" fill="#DC143C"/>
+          <g clip-path="url(#np-inner)" fill="#fff">
+            <circle cx="22" cy="38" r="9"/>
+            <circle cx="22" cy="34.4" r="8.6" fill="#DC143C"/>
+            <circle cx="22" cy="40.2" r="4.3"/>
+            <path d="M27.00 80.50 L29.07 85.27 L33.25 82.17 L32.66 87.34 L37.83 86.75 L34.73 90.93 L39.50 93.00 L34.73 95.07 L37.83 99.25 L32.66 98.66 L33.25 103.83 L29.07 100.73 L27.00 105.50 L24.93 100.73 L20.75 103.83 L21.34 98.66 L16.17 99.25 L19.27 95.07 L14.50 93.00 L19.27 90.93 L16.17 86.75 L21.34 87.34 L20.75 82.17 L24.93 85.27Z"/>
+          </g>
+        </svg>
+      </a>
+      <a class="brand-name" href="#top">Sanskar Adhikari</a>
+      <p class="brand-sub">M.S. Geoscience student and Graduate Research Assistant, <a href="https://sites.google.com/view/wku-crl/home" target="_blank" rel="noopener">Climate Research Lab</a>, Western Kentucky University</p>
+    </div>
     <nav class="site-nav" aria-label="Sections">
       <a href="#about">About</a>
       <a href="#research">Research</a>
@@ -266,7 +289,7 @@ footer::before { content: ""; position: absolute; left: 0; right: 0; top: 0; hei
       <h2>About</h2>
       <div class="prose">
         <p class="lede">I investigate extreme rainfall, compound hydroclimatic events, and rain-on-snow processes using climate observations, hydrological modeling, and computational analysis.</p>
-        <p>I'm an M.S. Geoscience student and Graduate Research Assistant in the Climate Research Lab at Western Kentucky University, advised by Dr. Zachary J. Suriano. My thesis asks whether extreme rainfall in Kentucky's Salt River Basin is becoming more frequent, and how antecedent soil moisture shapes the streamflow response when it does.</p>
+        <p>I'm an M.S. Geoscience student and Graduate Research Assistant in the <a href="https://sites.google.com/view/wku-crl/home" target="_blank" rel="noopener">Climate Research Lab</a> at Western Kentucky University, advised by Dr. Zachary J. Suriano. My thesis asks whether extreme rainfall in Kentucky's Salt River Basin is becoming more frequent, and how antecedent soil moisture shapes the streamflow response when it does.</p>
         <p>Alongside the thesis, I work on hemispheric rain-on-snow events and their surface energy budgets, and on precipitation-frequency estimates from the Kentucky Mesonet. I also served as a teaching assistant for the METR 121 meteorology lab.</p>
         <p>Before WKU, I earned a B.E. in Civil Engineering from Tribhuvan University (IOE Pulchowk Campus) and registered as a civil engineer with the Nepal Engineering Council.</p>
         <div class="news">
@@ -284,7 +307,7 @@ footer::before { content: ""; position: absolute; left: 0; right: 0; top: 0; hei
         </ul>
         <figure class="figure photo">
           <img src="assets/img/lab.webp" width="1600" height="1067" loading="lazy" alt="Sanskar working at a workstation in the WKU Climate Research Lab, with precipitation maps on the screens behind him">
-          <figcaption>Working in the Climate Research Lab, Western Kentucky University</figcaption>
+          <figcaption>Working in the <a href="https://sites.google.com/view/wku-crl/home" target="_blank" rel="noopener">Climate Research Lab</a>, Western Kentucky University</figcaption>
         </figure>
       </div>
     </section>
@@ -296,7 +319,7 @@ footer::before { content: ""; position: absolute; left: 0; right: 0; top: 0; hei
       <article class="project" id="salt-river">
         <div class="meta"><span class="status prep">In preparation</span><span>M.S. thesis</span><span>Aug 2025 – present</span><span>Lead researcher</span></div>
         <h3>Extreme rainfall in the Salt River Basin</h3>
-        <p class="place">Salt River Basin, Kentucky · Climate Research Lab, WKU</p>
+        <p class="place">Salt River Basin, Kentucky · <a href="https://sites.google.com/view/wku-crl/home" target="_blank" rel="noopener">Climate Research Lab</a>, WKU</p>
         <p>Are extreme rainfall events in the Salt River Basin becoming more frequent? I apply a non-stationary peaks-over-threshold (POT) framework to 44 years of 4-km PRISM daily precipitation. Thresholds follow the seasonal cycle (adapted from Acero et al., 2011), a basin-coverage criterion flags basin-wide events, and Ferro–Segers declustering separates independent storms. The next stage links these events to streamflow and antecedent soil moisture to study compound hydroclimatic extremes.</p>
         <ul class="tri-list">
           <li>Independent extreme-rainfall events became significantly more frequent from 1981 to 2024: about +1.8 events per decade (Sen's slope; Mann–Kendall p &lt; 0.001), against a mean of 12.8 events per year.</li>
@@ -312,7 +335,7 @@ footer::before { content: ""; position: absolute; left: 0; right: 0; top: 0; hei
       <article class="project" id="rain-on-snow">
         <div class="meta"><span class="status review">Under review</span><span><i>npj Hydrosphere</i></span><span>Aug 2025 – present</span><span>Co-author; data processing and analysis</span></div>
         <h3>Rain-on-snow events and surface energy fluxes</h3>
-        <p class="place">Northern Hemisphere · Climate Research Lab, WKU</p>
+        <p class="place">Northern Hemisphere · <a href="https://sites.google.com/view/wku-crl/home" target="_blank" rel="noopener">Climate Research Lab</a>, WKU</p>
         <p>Rain falling on snowpack can trigger rapid melt and flooding. Using hourly ERA5 reanalysis from 1980 to 2025, I identified rain-on-snow (ROS) hours across Northern Hemisphere land at three intensity thresholds (0.5, 1.0, and 2.0 mm per hour). I then examined the surface energy budget during those hours: sensible and latent heat, net solar, and net thermal radiation, by region and by elevation.</p>
         <ul class="tri-list">
           <li>Built event catalogs, climatologies, and energy summaries from about 2.5 TB of hourly NetCDF data with Python, xarray, and Dask.</li>
@@ -447,7 +470,7 @@ footer::before { content: ""; position: absolute; left: 0; right: 0; top: 0; hei
       <p class="sub" style="margin-top:24px">Positions and recognition</p>
       <div class="entry">
         <b>Graduate Research Assistant</b><span class="when">Aug 2025 – present</span>
-        <p>Climate Research Lab, Western Kentucky University</p>
+        <p><a href="https://sites.google.com/view/wku-crl/home" target="_blank" rel="noopener">Climate Research Lab</a>, Western Kentucky University</p>
       </div>
       <div class="entry">
         <b>Graduate Teaching Assistant, METR 121</b><span class="when">Aug 2025 – May 2026</span>
@@ -493,6 +516,7 @@ footer::before { content: ""; position: absolute; left: 0; right: 0; top: 0; hei
     <ul class="author-links">
       <li><svg class="ico line" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-7-7.6-7-12a7 7 0 0 1 14 0c0 4.4-7 12-7 12z"/><circle cx="12" cy="9" r="2.5"/></svg>Bowling Green, KY</li>
       <li><svg class="ico line" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 21h18M5 21V10M19 21V10M9.5 21v-7M14.5 21v-7M2 10l10-6 10 6"/></svg>Western Kentucky University</li>
+      <li><a href="https://sites.google.com/view/wku-crl/home" target="_blank" rel="noopener"><svg class="ico line" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17.5 17a4.5 4.5 0 1 0-1.4-8.8A6 6 0 0 0 4.5 11 3.5 3.5 0 0 0 6.5 17z"/><path d="M8 20l1-2M12 21l1-2M16 20l1-2"/></svg>Climate Research Lab</a></li>
       <li><a href="mailto:sanskar.adhikari280@topper.wku.edu"><svg class="ico line" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>Email</a></li>
       <li><a href="https://scholar.google.com/citations?user=SVxeQQUAAAAJ&amp;hl=en" target="_blank" rel="noopener"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path fill="#4285F4" d="M12 3 1 9.5l4 2.36V17c0 .3.1.6.4.8C7.4 19.2 9.6 20 12 20s4.6-.8 6.6-2.2c.3-.2.4-.5.4-.8v-5.14l2-1.18V16h2V9.5z"/><circle cx="12" cy="14" r="2.6" fill="#fff"/></svg>Google Scholar</a></li>
       <li><a href="https://orcid.org/0009-0004-6719-0520" target="_blank" rel="noopener"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="11" fill="#A6CE39"/><text x="12" y="16.2" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" font-weight="700" fill="#fff">iD</text></svg>ORCID</a></li>
