@@ -15,401 +15,214 @@
 <meta property="og:image:height" content="630">
 <meta property="og:image:alt" content="Sanskar Adhikari working in the WKU Climate Research Lab">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#c60c30">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,500;0,6..72,600;1,6..72,500&family=Public+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
 <style>
-/* Layout: one 1120px editorial column; sticky white header edged with a thin crimson-over-blue
-   stripe (the Nepal flag's border, as a hairline); each project is a two-column record that stacks on phones.
-   Palette: WKU red + Nepal crimson as the primary accent, Nepal blue as the secondary, cool off-white ground. */
+/* Layout: academic-homepage pattern. A plain top bar; below it a sticky author sidebar (round photo,
+   name, bio, icon links) beside one flowing content column. No cards: content is separated by
+   headings, hairlines, and whitespace. Palette: WKU red + Nepal crimson accent, Nepal blue secondary. */
 :root {
-  --bg: #f5f6f8;
-  --surface: #ffffff;
-  --ink: #131a2c;
-  --muted: #586074;
-  --rule: #e0e3ea;
-  --red: #c60c30;          /* WKU red, for fills and marks */
-  --red-ink: #a80c2b;      /* crimson for text links (higher contrast) */
-  --red-soft: #fbeaed;
+  --bg: #ffffff;
+  --ink: #161c2c;
+  --muted: #5a6175;
+  --faint: #8a90a2;
+  --rule: #e4e7ee;
+  --red: #c60c30;          /* WKU red, for marks and fills */
+  --red-ink: #a80c2b;      /* crimson for link text */
   --navy: #0b2f6e;         /* Nepal blue, deepened */
-  --navy-soft: #e8edf7;
+  --navy-soft: #eef2f9;
   --plate: #ffffff;
-  --shadow: 0 1px 2px rgba(19, 26, 44, .05), 0 8px 24px -12px rgba(19, 26, 44, .18);
-  --ok: #23663a;      --ok-bg: #e3f1e7;
-  --warn: #8a5508;    --warn-bg: #f8edda;
-  --idle: #33476f;    --idle-bg: #e8edf7;
+  --ok: #23663a; --warn: #8a5508; --idle: #3d527a;
 
   --font-display: "Newsreader", "Iowan Old Style", Georgia, serif;
   --font-body: "Public Sans", "Segoe UI", system-ui, -apple-system, sans-serif;
   --font-mono: "IBM Plex Mono", ui-monospace, "Cascadia Mono", Consolas, monospace;
-
-  --step-0: 1rem;
-  --step-1: 1.22rem;
-  --step-2: clamp(1.55rem, 1.3rem + .9vw, 1.95rem);
-  --step-3: clamp(2.3rem, 1.6rem + 2.6vw, 3.5rem);
-  --radius: 8px;
-  --col: 1120px;
+  --col: 1180px;
+  --side: 250px;
 }
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
-    --bg: #0b1222; --surface: #121b30; --ink: #eceef4; --muted: #a7aec2; --rule: #24304d;
-    --red: #ff5c72; --red-ink: #ff7d8f; --red-soft: #3a1622; --navy: #93b4ff; --navy-soft: #18254a; --plate: #f5f6f8;
-    --shadow: 0 1px 2px rgba(0, 0, 0, .3), 0 10px 28px -12px rgba(0, 0, 0, .6);
-    --ok: #8fd6a2; --ok-bg: #173323; --warn: #f0bf6c; --warn-bg: #3a2b12; --idle: #b6c6ec; --idle-bg: #1d2a4d;
+    --bg: #0d1324; --ink: #eceef4; --muted: #a9afc2; --faint: #7e859b; --rule: #242e48;
+    --red: #ff5c72; --red-ink: #ff7d8f; --navy: #93b4ff; --navy-soft: #16203d; --plate: #f5f6f8;
+    --ok: #8fd6a2; --warn: #f0bf6c; --idle: #b6c6ec;
     color-scheme: dark;
   }
 }
 :root[data-theme="dark"] {
-  --bg: #0b1222; --surface: #121b30; --ink: #eceef4; --muted: #a7aec2; --rule: #24304d;
-  --red: #ff5c72; --red-ink: #ff7d8f; --red-soft: #3a1622; --navy: #93b4ff; --navy-soft: #18254a; --plate: #f5f6f8;
-  --shadow: 0 1px 2px rgba(0, 0, 0, .3), 0 10px 28px -12px rgba(0, 0, 0, .6);
-  --ok: #8fd6a2; --ok-bg: #173323; --warn: #f0bf6c; --warn-bg: #3a2b12; --idle: #b6c6ec; --idle-bg: #1d2a4d;
+  --bg: #0d1324; --ink: #eceef4; --muted: #a9afc2; --faint: #7e859b; --rule: #242e48;
+  --red: #ff5c72; --red-ink: #ff7d8f; --navy: #93b4ff; --navy-soft: #16203d; --plate: #f5f6f8;
+  --ok: #8fd6a2; --warn: #f0bf6c; --idle: #b6c6ec;
   color-scheme: dark;
 }
 
 * { box-sizing: border-box; }
 html { scroll-behavior: smooth; scroll-padding-top: 84px; }
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } *, *::before, *::after { transition: none !important; } }
-body {
-  margin: 0;
-  background: var(--bg);
-  color: var(--ink);
-  font: 400 var(--step-0)/1.65 var(--font-body);
-  -webkit-font-smoothing: antialiased;
-}
+body { margin: 0; background: var(--bg); color: var(--ink); font: 400 1.02rem/1.7 var(--font-body); -webkit-font-smoothing: antialiased; }
 img { max-width: 100%; height: auto; display: block; }
-a { color: var(--red-ink); text-underline-offset: 3px; text-decoration-thickness: 1px; }
+a { color: var(--red-ink); text-underline-offset: 3px; text-decoration-thickness: 1px; transition: color .15s; }
 a:hover { color: var(--navy); }
-a:focus-visible, button:focus-visible { outline: 2px solid var(--navy); outline-offset: 3px; border-radius: 4px; }
-h1, h2, h3 { font-family: var(--font-display); font-weight: 600; line-height: 1.15; text-wrap: balance; margin: 0; letter-spacing: -0.01em; }
+a:focus-visible { outline: 2px solid var(--navy); outline-offset: 3px; border-radius: 3px; }
+h1, h2, h3 { font-family: var(--font-display); font-weight: 600; line-height: 1.2; text-wrap: balance; margin: 0; letter-spacing: -0.01em; }
 p { margin: 0; }
-.wrap { max-width: var(--col); margin: 0 auto; padding-inline: 24px; }
+i { font-style: italic; }
+.wrap { max-width: var(--col); margin: 0 auto; padding-inline: 28px; }
 @media (max-width: 760px) { .wrap { padding-inline: 18px; } }
-.label {
-  font: 500 0.74rem/1.3 var(--font-mono);
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--muted);
-}
-/* pennant marker: a small triangle taken from the Nepal flag's silhouette */
-.tri { display: inline-block; width: 7px; height: 9px; background: var(--red); clip-path: polygon(0 0, 100% 50%, 0 100%); }
+.tri { display: inline-block; width: 7px; height: 9px; flex: none; background: var(--red); clip-path: polygon(0 0, 100% 50%, 0 100%); }
 
-/* ---------- header ---------- */
-.site-head {
-  position: sticky; top: 0; z-index: 10;
-  background: color-mix(in srgb, var(--surface) 94%, transparent);
-  backdrop-filter: blur(10px);
-  padding-top: env(safe-area-inset-top, 0px);
-}
-.site-head::after { /* crimson hairline over a blue hairline */
+/* ---------- top bar ---------- */
+.site-head { position: sticky; top: 0; z-index: 10; background: color-mix(in srgb, var(--bg) 94%, transparent); backdrop-filter: blur(10px); padding-top: env(safe-area-inset-top, 0px); }
+.site-head::after { /* crimson hairline over a blue hairline, after the Nepal flag's border */
   content: ""; position: absolute; left: 0; right: 0; bottom: -3px; height: 3px;
   background: linear-gradient(var(--red) 0 2px, var(--navy) 2px 3px);
 }
-.site-head .wrap { display: flex; align-items: center; gap: 24px; min-height: 64px; }
-.brand { display: inline-flex; align-items: center; gap: 10px; font: 600 1.2rem/1 var(--font-display); color: var(--ink); text-decoration: none; white-space: nowrap; }
+.site-head .wrap { display: flex; align-items: center; gap: 28px; min-height: 62px; }
+.brand { display: inline-flex; align-items: center; gap: 10px; font: 600 1.18rem/1 var(--font-display); color: var(--ink); text-decoration: none; white-space: nowrap; }
 .brand:hover { color: var(--ink); }
-.brand svg { width: 17px; height: 21px; flex: none; }
+.brand svg { width: 16px; height: 20px; flex: none; }
 .site-nav { display: flex; gap: 2px; margin-left: auto; overflow-x: auto; scrollbar-width: none; }
 .site-nav::-webkit-scrollbar { display: none; }
 .site-nav a {
-  position: relative; display: inline-flex; align-items: center; min-height: 40px;
-  color: var(--muted); text-decoration: none; font-size: 0.92rem; font-weight: 500;
-  padding: 0 11px; border-radius: 6px; white-space: nowrap; transition: color .15s;
+  position: relative; display: inline-flex; align-items: center; min-height: 40px; padding: 0 11px;
+  color: var(--muted); text-decoration: none; font-size: 0.95rem; white-space: nowrap;
 }
 .site-nav a::after {
-  content: ""; position: absolute; left: 11px; right: 11px; bottom: 6px; height: 2px;
-  background: var(--red); transform: scaleX(0); transform-origin: left; transition: transform .2s;
+  content: ""; position: absolute; left: 11px; right: 11px; bottom: 4px; height: 2px; background: var(--red);
+  transform: scaleX(0); transform-origin: left; transition: transform .2s;
 }
-.site-nav a:hover { color: var(--ink); }
+.site-nav a:hover, .site-nav a.is-active { color: var(--ink); }
 .site-nav a:hover::after, .site-nav a.is-active::after { transform: scaleX(1); }
-.site-nav a.is-active { color: var(--ink); }
-.site-nav a.cv-link { color: #fff; background: var(--red); margin-left: 8px; padding: 0 14px; }
-.site-nav a.cv-link::after { content: none; }
-.site-nav a.cv-link:hover { background: var(--navy); color: #fff; }
-@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .site-nav a.cv-link, :root:not([data-theme="light"]) .site-nav a.cv-link:hover { color: var(--bg); } }
-:root[data-theme="dark"] .site-nav a.cv-link, :root[data-theme="dark"] .site-nav a.cv-link:hover { color: var(--bg); }
-/* fade the menu's right edge whenever more items are hidden off-screen */
+.site-nav a.cv-link { color: var(--red-ink); font-weight: 600; }
 .site-nav.more-right { -webkit-mask-image: linear-gradient(90deg, #000 82%, transparent); mask-image: linear-gradient(90deg, #000 82%, transparent); }
 @media (max-width: 980px) {
-  .site-head .wrap { flex-direction: column; align-items: stretch; gap: 2px; padding-block: 12px 6px; }
+  .site-head .wrap { flex-direction: column; align-items: stretch; gap: 2px; padding-block: 12px 4px; }
   .site-nav { margin-left: -11px; }
-  html { scroll-padding-top: 118px; }
+  html { scroll-padding-top: 116px; }
 }
 
-/* ---------- hero ---------- */
-.hero { position: relative; padding-block: 72px 64px; overflow: hidden; }
-.hero::before { /* faint geometric field behind the portrait */
-  content: ""; position: absolute; top: 0; right: 0; width: min(46vw, 620px); height: 100%;
-  background:
-    linear-gradient(135deg, transparent 49.6%, color-mix(in srgb, var(--navy) 7%, transparent) 50%) right top / 100% 62% no-repeat,
-    linear-gradient(45deg, color-mix(in srgb, var(--red) 6%, transparent) 50%, transparent 50.4%) right bottom / 70% 46% no-repeat;
-  pointer-events: none;
-}
-.hero .wrap { position: relative; display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr); gap: 64px; align-items: start; }
-.hero-text { display: grid; gap: 18px; min-width: 0; padding-top: 28px; }
-.hero h1 { font-size: var(--step-3); line-height: 1.04; letter-spacing: -0.02em; }
-.hero .role { font: italic 500 clamp(1.25rem, 1.1rem + .6vw, 1.55rem)/1.35 var(--font-display); color: var(--navy); text-wrap: balance; }
-.hero .label { display: flex; align-items: center; gap: 10px; }
-.hero .bio { max-width: 56ch; font-size: 1.08rem; color: var(--ink); }
-.focus { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px; }
-.focus li {
-  display: inline-flex; align-items: center; gap: 8px;
-  border: 1px solid var(--rule); background: var(--surface); color: var(--ink);
-  border-radius: 999px; padding: 5px 14px 5px 12px; font-size: 0.87rem; font-weight: 500;
-}
-.focus li::before { content: ""; width: 6px; height: 8px; background: var(--red); clip-path: polygon(0 0, 100% 50%, 0 100%); }
-.actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 8px; }
-.btn {
-  display: inline-flex; align-items: center; gap: 8px; min-height: 44px;
-  padding: 0 18px; border-radius: 6px;
-  font-weight: 600; font-size: 0.94rem; text-decoration: none;
-  border: 1px solid var(--rule); color: var(--navy); background: var(--surface);
-  transition: border-color .15s, color .15s, background .15s, transform .15s;
-}
-.btn:hover { border-color: var(--navy); color: var(--navy); transform: translateY(-1px); }
-.btn.primary { background: var(--red); border-color: var(--red); color: #fff; }
-.btn.primary:hover { background: var(--navy); border-color: var(--navy); color: #fff; }
-@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .btn.primary, :root:not([data-theme="light"]) .btn.primary:hover { color: var(--bg); } }
-:root[data-theme="dark"] .btn.primary, :root[data-theme="dark"] .btn.primary:hover { color: var(--bg); }
-.latest {
-  display: grid; gap: 6px; margin-top: 14px; padding: 16px 18px 16px 20px; max-width: 60ch;
-  background: var(--surface); border: 1px solid var(--rule); border-radius: var(--radius);
-  box-shadow: inset 3px 0 0 var(--navy);
-}
-.latest p { font-size: 0.96rem; line-height: 1.45; }
-.latest p a { color: var(--ink); font-weight: 500; text-decoration-color: var(--rule); }
-.latest p a:hover { color: var(--red-ink); text-decoration-color: currentColor; }
-.latest .latest-meta { color: var(--muted); font-size: 0.86rem; }
-.latest .latest-meta a { color: var(--red-ink); font-weight: 400; }
-.hero-side { position: relative; display: grid; gap: 22px; justify-items: end; min-width: 0; }
-.portrait {
-  position: relative; margin: 0; max-width: 360px; width: 100%;
-  border-radius: var(--radius); background: var(--surface); border: 1px solid var(--rule);
-  box-shadow: 14px 14px 0 -1px var(--navy-soft), 14px 14px 0 0 color-mix(in srgb, var(--navy) 22%, transparent);
-}
-.portrait::before { /* crimson pennant tucked into the frame's corner */
-  content: ""; position: absolute; z-index: 1; top: -10px; left: -10px; width: 44px; height: 54px;
-  background: var(--red); clip-path: polygon(0 0, 100% 45%, 42% 45%, 100% 100%, 0 100%);
-}
-.portrait img { aspect-ratio: 9 / 10; object-fit: cover; width: 100%; border-radius: var(--radius) var(--radius) 0 0; }
-.portrait figcaption { font-size: 0.8rem; color: var(--muted); padding: 9px 14px; }
-.profiles {
-  width: 100%; max-width: 360px; display: grid; gap: 4px; padding: 14px 14px 10px;
-  background: var(--surface); border: 1px solid var(--rule); border-radius: var(--radius);
-}
-.profiles .label { padding: 0 8px 6px; border-bottom: 1px solid var(--rule); margin-bottom: 4px; }
-.profiles ul { list-style: none; margin: 0; padding: 0; display: grid; }
-.profiles li + li { border-top: 1px solid var(--rule); }
-.profiles a {
-  position: relative; display: flex; align-items: center; gap: 12px; min-height: 46px; padding: 0 8px;
-  color: var(--ink); text-decoration: none; font-weight: 500; transition: color .15s, padding .15s;
-}
-.profiles a:hover { color: var(--red-ink); padding-left: 12px; }
-.profiles a::after { content: "↗"; margin-left: auto; color: var(--muted); font-size: 0.85rem; transition: color .15s; }
-.profiles a:hover::after { color: var(--red-ink); }
-.ico { width: 22px; height: 22px; flex: none; }
-@media (max-width: 900px) {
-  .hero .wrap { gap: 40px; }
-}
-@media (max-width: 760px) {
-  .hero { padding-block: 32px 40px; }
-  .hero::before { width: 70vw; height: 340px; }
-  .hero .wrap { grid-template-columns: minmax(0, 1fr); gap: 28px; }
-  .hero-text { padding-top: 0; }
-  .hero-side { justify-items: start; gap: 28px; }
-  .profiles { order: -1; max-width: none; padding: 12px; }
-  .profiles .label { padding-inline: 2px; }
-  .profiles ul { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
-  .profiles li + li { border-top: 0; }
-  .profiles a { border: 1px solid var(--rule); border-radius: 6px; gap: 8px; padding: 0 10px; font-size: 0.92rem; white-space: nowrap; min-height: 44px; }
-  .profiles a:hover { padding-left: 10px; }
-  .profiles a::after { content: none; }
-  .portrait { max-width: 300px; margin-left: 10px; }
+/* ---------- two-column layout ---------- */
+.layout { display: grid; grid-template-columns: var(--side) minmax(0, 1fr); gap: 64px; padding-block: 56px 0; align-items: start; }
+@media (max-width: 980px) { .layout { grid-template-columns: minmax(0, 1fr); gap: 8px; padding-top: 32px; } }
+
+/* author sidebar */
+.author { position: sticky; top: 96px; display: grid; gap: 14px; align-content: start; }
+.avatar { width: 176px; aspect-ratio: 1; border-radius: 50%; overflow: hidden; margin-bottom: 6px; box-shadow: 0 0 0 3px var(--bg), 0 0 0 5px var(--red), 0 0 0 7px var(--bg), 0 0 0 8px var(--navy); }
+.avatar img { width: 100%; height: 100%; object-fit: cover; }
+.author h1 { font-size: 1.6rem; }
+.author .role { font: italic 500 1.08rem/1.35 var(--font-display); color: var(--navy); margin-top: -6px; }
+.author .bio { font-size: 0.92rem; line-height: 1.6; color: var(--muted); }
+.author-links { list-style: none; margin: 4px 0 0; padding: 12px 0 0; border-top: 1px solid var(--rule); display: grid; gap: 1px; font-size: 0.92rem; }
+.author-links li { display: flex; align-items: center; gap: 10px; min-height: 32px; color: var(--muted); }
+.author-links a { display: flex; align-items: center; gap: 10px; min-height: 32px; color: var(--ink); text-decoration: none; }
+.author-links a:hover { color: var(--red-ink); }
+.ico { width: 17px; height: 17px; flex: none; color: var(--faint); }
+.author-links a:hover .ico.line { color: var(--red-ink); }
+@media (max-width: 980px) {
+  .author { position: static; grid-template-columns: auto minmax(0, 1fr); column-gap: 20px; row-gap: 10px; padding-bottom: 28px; border-bottom: 1px solid var(--rule); }
+  .avatar { width: 104px; grid-row: span 2; align-self: center; margin: 0 0 0 8px; }
+  .author h1 { font-size: 1.5rem; align-self: end; }
+  .author .role { align-self: start; margin-top: 0; }
+  .author .bio, .author-links { grid-column: 1 / -1; }
+  .author-links { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); column-gap: 16px; }
 }
 
-/* ---------- featured research ---------- */
-.featured { background: var(--surface); border-block: 1px solid var(--rule); padding-block: 40px 44px; }
-.featured > .wrap > .label { display: flex; align-items: center; gap: 10px; margin-bottom: 18px; }
-.featured > .wrap > .label::before { content: ""; width: 7px; height: 9px; background: var(--red); clip-path: polygon(0 0, 100% 50%, 0 100%); }
-.feature-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; }
-.feature {
-  position: relative; display: grid; gap: 10px; align-content: start; padding: 22px 22px 20px;
-  border: 1px solid var(--rule); border-radius: var(--radius); background: var(--bg); color: var(--ink); text-decoration: none;
-  overflow: hidden; transition: border-color .2s, transform .2s, box-shadow .2s;
-}
-.feature::before { /* top edge: blue at rest, crimson on hover */
-  content: ""; position: absolute; left: 0; right: 0; top: 0; height: 3px; background: var(--navy); transition: background .2s;
-}
-.feature:hover { color: var(--ink); border-color: color-mix(in srgb, var(--red) 40%, var(--rule)); transform: translateY(-3px); box-shadow: var(--shadow); }
-.feature:hover::before { background: var(--red); }
-.feature .metric { font: 500 1.7rem/1.1 var(--font-mono); color: var(--red-ink); font-variant-numeric: tabular-nums; margin-top: 4px; }
-.feature .metric small { font-size: 0.8rem; color: var(--muted); font-weight: 400; }
-.feature h3 { font-size: 1.3rem; }
-.feature p { color: var(--muted); font-size: 0.93rem; line-height: 1.55; }
-.feature .more { color: var(--navy); font-weight: 600; font-size: 0.9rem; margin-top: 4px; }
-.feature:hover .more { color: var(--red-ink); }
-@media (max-width: 960px) { .feature-grid { grid-template-columns: minmax(0, 1fr); } }
-
-/* ---------- sections ---------- */
-section.block { padding-block: 88px 8px; }
-.section-head { display: grid; gap: 10px; margin-bottom: 36px; }
-.section-head .label { display: flex; align-items: center; gap: 10px; color: var(--red-ink); }
-.section-head .label::before { content: ""; width: 7px; height: 9px; background: var(--red); clip-path: polygon(0 0, 100% 50%, 0 100%); }
-.section-head h2 { font-size: var(--step-2); }
-.section-head h2::after { /* thin crimson-and-blue rule */
-  content: ""; display: block; width: 56px; height: 3px; margin-top: 14px;
+/* ---------- content column ---------- */
+.content { min-width: 0; max-width: 780px; }
+.content > section { padding-bottom: 72px; }
+.content > section + section { padding-top: 8px; }
+.content h2 { display: flex; align-items: center; gap: 12px; font-size: clamp(1.55rem, 1.35rem + .8vw, 1.9rem); padding-bottom: 12px; margin-bottom: 28px; border-bottom: 1px solid var(--rule); position: relative; }
+.content h2::after { /* thin crimson-and-blue underline segment */
+  content: ""; position: absolute; left: 0; bottom: -1px; width: 56px; height: 3px;
   background: linear-gradient(90deg, var(--red) 0 68%, var(--navy) 68% 100%);
 }
-.section-head p { color: var(--muted); max-width: 62ch; }
-@media (max-width: 760px) { section.block { padding-block: 64px 8px; } }
+.content h3 { font-size: 1.32rem; }
+.prose { display: grid; gap: 16px; }
+.lede { font: 500 1.28rem/1.5 var(--font-display); color: var(--ink); }
+.label { font: 500 0.72rem/1.3 var(--font-mono); letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); }
+.sub { font: 600 1.05rem/1.3 var(--font-body); color: var(--navy); margin: 8px 0 -4px; }
 
-/* about */
-.about-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 48px; align-items: start; }
-.about-grid > * { min-width: 0; }
-.about-grid .photo { border-radius: var(--radius); overflow: hidden; border: 1px solid var(--rule); background: var(--surface); box-shadow: var(--shadow); }
-.about-grid .photo figcaption { font-size: 0.8rem; color: var(--muted); padding: 9px 14px; }
-.prose { display: grid; gap: 14px; max-width: 62ch; }
-.interests { display: flex; flex-wrap: wrap; gap: 8px; list-style: none; padding: 0; margin: 8px 0 0; }
-.interests li { background: var(--navy-soft); color: var(--navy); border-radius: 999px; padding: 5px 13px; font-size: 0.88rem; font-weight: 500; }
-@media (max-width: 760px) { .about-grid { grid-template-columns: 1fr; gap: 28px; } }
+/* news line, like an announcement quote */
+.news { margin: 6px 0 0; padding: 4px 0 4px 18px; border-left: 3px solid var(--red); display: grid; gap: 8px; font-size: 0.97rem; }
+.news p { color: var(--muted); }
+.news b { color: var(--ink); font-weight: 600; }
 
-/* status chips */
-.chip {
-  display: inline-flex; align-items: center; gap: 6px; width: fit-content;
-  font: 500 0.72rem/1 var(--font-mono); letter-spacing: 0.05em; text-transform: uppercase;
-  padding: 6px 9px; border-radius: 4px;
-}
-.chip::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: currentColor; }
-.chip.published { color: var(--ok); background: var(--ok-bg); }
-.chip.review { color: var(--warn); background: var(--warn-bg); }
-.chip.prep { color: var(--idle); background: var(--idle-bg); }
-.chip.done { color: var(--idle); background: var(--idle-bg); }
-.chip.done::before { border-radius: 1px; }
+.tri-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 7px; }
+.tri-list li { position: relative; padding-left: 20px; }
+.tri-list li::before { content: ""; position: absolute; left: 2px; top: .66em; width: 7px; height: 9px; background: var(--red); clip-path: polygon(0 0, 100% 50%, 0 100%); }
+.interests { columns: 2; column-gap: 32px; }
+.interests li { break-inside: avoid; }
+@media (max-width: 560px) { .interests { columns: 1; } }
+
+figure { margin: 0; }
+.figure { display: grid; gap: 10px; margin-top: 4px; }
+.figure a { display: block; background: var(--plate); border: 1px solid var(--rule); border-radius: 4px; padding: 8px; }
+.figure.photo a { padding: 0; border: 0; background: none; }
+.figure.photo img { border-radius: 4px; width: 100%; aspect-ratio: 16 / 9; object-fit: cover; object-position: 50% 60%; }
+.figure figcaption { font-size: 0.86rem; color: var(--muted); line-height: 1.5; }
+.figure figcaption b { color: var(--ink); font-weight: 600; }
+
+/* status: coloured dot + text, no box */
+.status { display: inline-flex; align-items: center; gap: 7px; font: 500 0.74rem/1 var(--font-mono); letter-spacing: 0.06em; text-transform: uppercase; }
+.status::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: currentColor; }
+.status.published { color: var(--ok); }
+.status.review { color: var(--warn); }
+.status.prep, .status.done { color: var(--idle); }
 
 /* projects */
-.project {
-  display: grid; grid-template-columns: 230px minmax(0, 1fr); gap: 44px;
-  padding-block: 56px; border-top: 1px solid var(--rule);
-}
-.project:first-of-type { border-top: 0; padding-top: 4px; }
-.project .rail {
-  display: grid; gap: 16px; align-content: start; position: sticky; top: 96px;
-  padding-left: 16px; border-left: 2px solid var(--navy-soft);
-}
-.rail dl { margin: 0; display: grid; gap: 12px; }
-.rail dt { font: 500 0.69rem/1.3 var(--font-mono); letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); }
-.rail dd { margin: 3px 0 0; font-size: 0.9rem; line-height: 1.45; }
-.rail .links { display: grid; gap: 6px; font-size: 0.9rem; font-weight: 500; }
-.project .body { display: grid; gap: 14px; min-width: 0; }
-.project h3 { font-size: var(--step-2); }
-.project .place { color: var(--navy); font-size: 0.93rem; font-weight: 500; margin-top: -6px; }
-.project .body > p { max-width: 68ch; }
-.findings { margin: 0; padding: 0; list-style: none; display: grid; gap: 8px; max-width: 68ch; }
-.findings li { position: relative; padding-left: 20px; }
-.findings li::before { content: ""; position: absolute; left: 2px; top: .62em; width: 7px; height: 9px; background: var(--red); clip-path: polygon(0 0, 100% 50%, 0 100%); }
-.figs { display: grid; gap: 16px; grid-template-columns: repeat(2, minmax(0, 1fr)); margin-top: 8px; }
-.figs .wide { grid-column: 1 / -1; }
-.fig.contain img { max-width: 620px; width: 100%; }
-.fig { margin: 0; border: 1px solid var(--rule); border-radius: var(--radius); overflow: hidden; background: var(--surface); transition: box-shadow .2s, border-color .2s; }
-.fig:hover { box-shadow: var(--shadow); border-color: color-mix(in srgb, var(--navy) 30%, var(--rule)); }
-.fig a { display: block; background: var(--plate); padding: 12px; }
-.fig img { margin: 0 auto; }
-.fig figcaption { padding: 11px 14px; font-size: 0.85rem; color: var(--muted); line-height: 1.5; border-top: 1px solid var(--rule); }
-.fig figcaption b { color: var(--ink); font-weight: 600; }
-.numbers { display: flex; flex-wrap: wrap; border: 1px solid var(--rule); border-radius: var(--radius); background: var(--surface); overflow: hidden; }
-.numbers div { padding: 16px 18px; display: grid; gap: 2px; border-left: 1px solid var(--rule); flex: 1 1 130px; }
-.numbers div:first-child { border-left: 0; }
-.numbers strong { font: 500 1.15rem/1.2 var(--font-mono); color: var(--red-ink); font-variant-numeric: tabular-nums; }
-.numbers span { font-size: 0.82rem; color: var(--muted); }
-@media (max-width: 760px) {
-  .project { grid-template-columns: 1fr; gap: 20px; padding-block: 44px; }
-  .project .rail { position: static; }
-  .rail dl { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .figs { grid-template-columns: 1fr; }
-}
+.project { display: grid; gap: 14px; padding-block: 36px; border-top: 1px solid var(--rule); }
+.project:first-of-type { border-top: 0; padding-top: 0; }
+.meta { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 14px; font-size: 0.88rem; color: var(--muted); }
+.meta > * + *::before { content: "·"; margin-right: 14px; color: var(--faint); }
+.meta .status::before { margin-right: 0; }
+.project .place { color: var(--navy); font-size: 0.93rem; font-weight: 500; margin-top: -8px; }
+.facts { font: 400 0.84rem/1.6 var(--font-mono); color: var(--muted); }
+.facts b { color: var(--red-ink); font-weight: 500; }
+.more { font-size: 0.92rem; font-weight: 500; }
 
 /* publications */
-.pubs { display: grid; gap: 34px; }
-.pub-group h3 { display: flex; align-items: center; gap: 12px; font: 500 0.78rem/1.3 var(--font-mono); letter-spacing: 0.1em; text-transform: uppercase; color: var(--navy); margin-bottom: 14px; }
-.pub-group h3::after { content: ""; flex: 1; height: 1px; background: var(--rule); }
-.pub-group ol { list-style: none; margin: 0; padding: 0; display: grid; gap: 12px; }
-.pub-group li {
-  display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 8px 24px; align-items: start;
-  background: var(--surface); border: 1px solid var(--rule); border-radius: var(--radius); padding: 18px 20px;
-  transition: box-shadow .2s, border-color .2s;
-}
-.pub-group li:hover { box-shadow: inset 3px 0 0 var(--red), var(--shadow); border-color: color-mix(in srgb, var(--red) 25%, var(--rule)); }
-.pub { display: grid; gap: 5px; min-width: 0; max-width: 80ch; }
-.pub-title { font: 600 1.16rem/1.35 var(--font-display); color: var(--ink); }
-.pub-title a { color: inherit; text-decoration-color: var(--rule); }
-.pub-title a:hover { color: var(--red-ink); text-decoration-color: currentColor; }
+.pub-group + .pub-group { margin-top: 40px; }
+.pub-group > .label { display: block; color: var(--navy); margin-bottom: 18px; }
+.pub { display: grid; gap: 4px; padding-block: 16px; border-top: 1px solid var(--rule); }
+.pub:first-of-type { border-top: 0; padding-top: 0; }
+.pub-title { font: 600 1.18rem/1.4 var(--font-display); color: var(--ink); }
+.pub-title a { color: var(--red-ink); text-decoration-color: color-mix(in srgb, currentColor 35%, transparent); }
+.pub-title a:hover { color: var(--navy); text-decoration-color: currentColor; }
+.pub-venue { font-size: 0.95rem; color: var(--ink); }
 .pub-authors { font-size: 0.92rem; color: var(--muted); }
-.pub-venue { font-size: 0.88rem; color: var(--muted); }
-.pub-group .me { font-weight: 600; color: var(--ink); }
-@media (max-width: 760px) { .pub-group li { grid-template-columns: 1fr; padding: 16px; } }
+.me { font-weight: 600; color: var(--ink); }
 
 /* presentations */
-.talks { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; }
-.talk {
-  margin: 0; background: var(--surface); border: 1px solid var(--rule); border-radius: var(--radius); overflow: hidden;
-  display: grid; grid-template-rows: auto 1fr; transition: box-shadow .2s, transform .2s;
-}
-.talk:hover { box-shadow: var(--shadow); transform: translateY(-3px); }
-.talk img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; transition: transform .5s; }
-.talk:hover img { transform: scale(1.03); }
-.talk.portrait-shot img { object-position: 50% 40%; }
-.talk .info { position: relative; padding: 20px 22px 22px; display: grid; gap: 9px; align-content: start; background: var(--surface); border-top: 3px solid var(--navy); }
-.talk:hover .info { border-top-color: var(--red); }
-.talk .kind { display: flex; flex-wrap: wrap; gap: 6px 12px; align-items: center; }
-.talk h3 { font-size: 1.28rem; line-height: 1.3; }
-.talk p { color: var(--muted); font-size: 0.93rem; }
-.upcoming {
-  margin-top: 24px; display: flex; flex-wrap: wrap; gap: 8px 16px; align-items: baseline;
-  padding: 16px 20px; border: 1px solid color-mix(in srgb, var(--navy) 25%, var(--rule)); border-radius: var(--radius);
-  background: var(--navy-soft); box-shadow: inset 3px 0 0 var(--red);
-}
-.upcoming .label { color: var(--navy); }
-.upcoming p { font-size: 0.95rem; }
-@media (max-width: 760px) { .talks { grid-template-columns: 1fr; } }
+.talk { display: grid; grid-template-columns: 220px minmax(0, 1fr); gap: 24px; align-items: start; padding-block: 24px; border-top: 1px solid var(--rule); }
+.talk:first-of-type { border-top: 0; padding-top: 0; }
+.talk .thumb { display: block; overflow: hidden; border-radius: 4px; }
+.talk img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; transition: transform .4s; }
+.talk .thumb:hover img { transform: scale(1.04); }
+.talk.portrait-shot img { object-position: 50% 38%; }
+.talk .info { display: grid; gap: 6px; }
+.talk h3 { font-size: 1.2rem; line-height: 1.35; }
+.talk p { color: var(--muted); font-size: 0.94rem; }
+@media (max-width: 600px) { .talk { grid-template-columns: minmax(0, 1fr); gap: 14px; } }
 
-/* experience + skills */
-.two-col { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 48px; }
-.two-col > * { min-width: 0; }
-.entry { display: grid; gap: 4px; padding-block: 16px; border-top: 1px solid var(--rule); }
-.entry:first-of-type { border-top: 0; padding-top: 0; }
-.entry .head { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 4px 16px; }
+/* experience */
+.entry { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 2px 20px; padding-block: 12px; }
 .entry b { font-weight: 600; }
-.entry .when { font: 400 0.82rem/1.6 var(--font-mono); color: var(--navy); }
-.entry p { color: var(--muted); font-size: 0.93rem; }
-.col-title { margin-bottom: 16px; padding-bottom: 8px; border-bottom: 2px solid var(--navy-soft); color: var(--navy); }
-.skills { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; }
-.skill {
-  background: var(--surface); border: 1px solid var(--rule); border-radius: var(--radius); padding: 20px 22px;
-  display: grid; gap: 12px; align-content: start; transition: border-color .2s;
-}
-.skill:hover { border-color: color-mix(in srgb, var(--navy) 35%, var(--rule)); }
-.skill h3 { font: 600 1.02rem/1.3 var(--font-body); color: var(--navy); }
-.skill ul { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 6px; }
-.skill li { font: 400 0.82rem/1.3 var(--font-mono); padding: 6px 9px; border-radius: 4px; background: var(--bg); border: 1px solid var(--rule); }
-@media (max-width: 760px) { .two-col, .skills { grid-template-columns: 1fr; } }
+.entry .when { font: 400 0.82rem/1.9 var(--font-mono); color: var(--navy); text-align: right; white-space: nowrap; }
+.entry p { grid-column: 1 / -1; color: var(--muted); font-size: 0.93rem; }
+@media (max-width: 560px) { .entry { grid-template-columns: minmax(0, 1fr); } .entry .when { text-align: left; } }
+
+/* skills */
+.skills { margin: 0; display: grid; grid-template-columns: 210px minmax(0, 1fr); gap: 12px 24px; }
+.skills dt { font-weight: 600; color: var(--navy); }
+.skills dd { margin: 0; color: var(--muted); }
+@media (max-width: 600px) { .skills { grid-template-columns: minmax(0, 1fr); gap: 2px; } .skills dd { margin-bottom: 12px; } }
 
 /* contact */
-.contact { position: relative; margin-top: 96px; background: var(--surface); border-top: 1px solid var(--rule); overflow: hidden; }
-.contact::before { /* one large, faint pennant */
-  content: ""; position: absolute; right: -40px; top: -30px; width: 260px; height: 320px;
-  background: color-mix(in srgb, var(--red) 5%, transparent); clip-path: polygon(0 0, 100% 45%, 42% 45%, 100% 100%, 0 100%);
-  pointer-events: none;
-}
-.contact .wrap { position: relative; padding-block: 56px; display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 24px 48px; align-items: center; }
-.contact h2 { font-size: var(--step-2); margin-bottom: 10px; }
-.contact p { color: var(--muted); max-width: 54ch; }
-.contact .email { font: 500 1rem/1.4 var(--font-mono); color: var(--ink); word-break: break-all; }
-footer {
-  position: relative; padding-block: 24px calc(24px + env(safe-area-inset-bottom, 0px));
-  font-size: 0.82rem; color: var(--muted); background: var(--surface);
-}
+.contact-line { font: 500 1rem/1.5 var(--font-mono); word-break: break-all; }
+
+footer { position: relative; margin-top: 24px; padding-block: 24px calc(24px + env(safe-area-inset-bottom, 0px)); font-size: 0.82rem; color: var(--faint); }
 footer::before { content: ""; position: absolute; left: 0; right: 0; top: 0; height: 3px; background: linear-gradient(var(--navy) 0 1px, var(--red) 1px 3px); }
-@media (max-width: 760px) { .contact .wrap { grid-template-columns: 1fr; } }
 </style>
 </head>
 <body>
@@ -425,472 +238,264 @@ footer::before { content: ""; position: absolute; left: 0; right: 0; top: 0; hei
       <a href="#experience">Experience</a>
       <a href="#skills">Skills</a>
       <a href="#contact">Contact</a>
-      <a class="cv-link" href="assets/Sanskar_Adhikari_CV.pdf" target="_blank" rel="noopener">CV (PDF)</a>
+      <a class="cv-link" href="assets/Sanskar_Adhikari_CV.pdf" target="_blank" rel="noopener">CV</a>
     </nav>
   </div>
 </header>
 
-<main id="top">
+<div class="wrap layout" id="top">
 
-  <!-- ===== Hero ===== -->
-  <section class="hero">
-    <div class="wrap">
-      <div class="hero-text">
-        <h1>Sanskar Adhikari</h1>
-        <p class="role">Graduate Researcher · Hydroclimatology &amp; Water Resources</p>
-        <p class="label">M.S. Geoscience · Climate Research Lab, Western Kentucky University</p>
-        <p class="bio">I investigate extreme rainfall, compound hydroclimatic events, and rain-on-snow processes using climate observations, hydrological modeling, and computational analysis.</p>
-        <ul class="focus" aria-label="Research focus">
-          <li>Extreme precipitation</li>
-          <li>Compound events</li>
-          <li>Rain-on-snow</li>
+  <!-- ===== Author sidebar ===== -->
+  <aside class="author" aria-label="About the author">
+    <div class="avatar"><img src="assets/img/avatar.webp" width="480" height="480" alt="Portrait of Sanskar Adhikari outside the Environmental Sciences and Technology building at WKU"></div>
+    <h1>Sanskar Adhikari</h1>
+    <p class="role">Graduate Researcher · Hydroclimatology &amp; Water Resources</p>
+    <p class="bio">M.S. Geoscience student and Graduate Research Assistant, Climate Research Lab, Western Kentucky University.</p>
+    <ul class="author-links">
+      <li><svg class="ico line" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-7-7.6-7-12a7 7 0 0 1 14 0c0 4.4-7 12-7 12z"/><circle cx="12" cy="9" r="2.5"/></svg>Bowling Green, KY</li>
+      <li><svg class="ico line" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 21h18M5 21V10M19 21V10M9.5 21v-7M14.5 21v-7M2 10l10-6 10 6"/></svg>Western Kentucky University</li>
+      <li><a href="mailto:sanskar.adhikari280@topper.wku.edu"><svg class="ico line" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>Email</a></li>
+      <li><a href="https://scholar.google.com/citations?user=SVxeQQUAAAAJ&amp;hl=en" target="_blank" rel="noopener"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path fill="#4285F4" d="M12 3 1 9.5l4 2.36V17c0 .3.1.6.4.8C7.4 19.2 9.6 20 12 20s4.6-.8 6.6-2.2c.3-.2.4-.5.4-.8v-5.14l2-1.18V16h2V9.5z"/><circle cx="12" cy="14" r="2.6" fill="#fff"/></svg>Google Scholar</a></li>
+      <li><a href="https://orcid.org/0009-0004-6719-0520" target="_blank" rel="noopener"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="11" fill="#A6CE39"/><text x="12" y="16.2" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" font-weight="700" fill="#fff">iD</text></svg>ORCID</a></li>
+      <li><a href="https://github.com/SdotCat-30" target="_blank" rel="noopener"><svg class="ico" viewBox="0 0 16 16" aria-hidden="true" style="color:var(--ink)"><path fill="currentColor" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg>GitHub</a></li>
+      <li><a href="https://www.linkedin.com/in/sanskar-adhikari-97b775298/" target="_blank" rel="noopener"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><rect width="24" height="24" rx="4" fill="#0A66C2"/><text x="12" y="17" text-anchor="middle" font-family="Arial, sans-serif" font-size="13" font-weight="700" fill="#fff">in</text></svg>LinkedIn</a></li>
+      <li><a href="assets/Sanskar_Adhikari_CV.pdf" target="_blank" rel="noopener"><svg class="ico line" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 3H6a1 1 0 0 0-1 1v16a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V8z"/><path d="M14 3v5h5M9 13h6M9 17h6"/></svg>Academic CV (PDF)</a></li>
+    </ul>
+  </aside>
+
+  <main class="content">
+
+    <!-- ===== About ===== -->
+    <section id="about">
+      <h2>About</h2>
+      <div class="prose">
+        <p class="lede">I investigate extreme rainfall, compound hydroclimatic events, and rain-on-snow processes using climate observations, hydrological modeling, and computational analysis.</p>
+        <p>I'm a graduate student in Geoscience at Western Kentucky University, advised by Dr. Zachary J. Suriano. My M.S. thesis asks whether extreme rainfall in Kentucky's Salt River Basin is becoming more frequent, and how antecedent soil moisture shapes the streamflow response when it does.</p>
+        <p>Alongside the thesis, I work on hemispheric rain-on-snow events and their surface energy budgets, and on precipitation-frequency estimates from the Kentucky Mesonet. I also served as a teaching assistant for the METR 121 meteorology lab.</p>
+        <p>Before WKU, I earned a B.E. in Civil Engineering from Tribhuvan University (IOE Pulchowk Campus) and registered as a civil engineer with the Nepal Engineering Council.</p>
+        <div class="news">
+          <p><b>Latest publication:</b> <a href="https://doi.org/10.2166/h2oj.2025.027" target="_blank" rel="noopener">Climate change and hydropower resilience: A CMIP6–SWAT analysis of the Kankai River Basin's energy landscape</a>, <i>H2Open Journal</i>, 2025. <a href="#publications">All publications →</a></p>
+          <p><b>Upcoming:</b> presenting Salt River Basin thesis research at the American Meteorological Society Annual Meeting, Denver, CO, January 2027.</p>
+        </div>
+        <p class="sub">Research interests</p>
+        <ul class="tri-list interests">
+          <li>Hydroclimatology</li>
+          <li>Extreme precipitation and flooding</li>
+          <li>Compound hydroclimatic events</li>
+          <li>Soil moisture and rainfall–runoff</li>
+          <li>Rain-on-snow processes</li>
+          <li>Climate change and water resources</li>
         </ul>
-        <div class="actions">
-          <a class="btn primary" href="#research">Explore research</a>
-          <a class="btn" href="assets/Sanskar_Adhikari_CV.pdf" target="_blank" rel="noopener">View academic CV</a>
-          <a class="btn" href="https://scholar.google.com/citations?user=SVxeQQUAAAAJ&amp;hl=en" target="_blank" rel="noopener">Google Scholar</a>
-        </div>
-        <div class="latest">
-          <span class="chip published">Latest publication</span>
-          <p><a href="https://doi.org/10.2166/h2oj.2025.027" target="_blank" rel="noopener">Climate change and hydropower resilience: A CMIP6–SWAT analysis of the Kankai River Basin's energy landscape</a></p>
-          <p class="latest-meta"><i>H2Open Journal</i>, 2025 · <a href="#publications">All publications</a></p>
-        </div>
-      </div>
-      <div class="hero-side">
-        <figure class="portrait">
-          <img src="assets/img/profile.webp" width="900" height="1010" alt="Sanskar Adhikari standing outside the Environmental Sciences and Technology building at Western Kentucky University">
-          <figcaption>Ogden College of Science, WKU</figcaption>
-        </figure>
-        <nav class="profiles" aria-label="Academic profiles">
-          <p class="label">Academic profiles</p>
-          <ul>
-            <li><a href="https://scholar.google.com/citations?user=SVxeQQUAAAAJ&amp;hl=en" target="_blank" rel="noopener">
-              <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path fill="#4285F4" d="M12 3 1 9.5l4 2.36V17c0 .3.1.6.4.8C7.4 19.2 9.6 20 12 20s4.6-.8 6.6-2.2c.3-.2.4-.5.4-.8v-5.14l2-1.18V16h2V9.5z"/><circle cx="12" cy="14" r="2.6" fill="#fff"/></svg>
-              <span>Google Scholar</span></a></li>
-            <li><a href="https://orcid.org/0009-0004-6719-0520" target="_blank" rel="noopener">
-              <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="11" fill="#A6CE39"/><text x="12" y="16.2" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" font-weight="700" fill="#fff">iD</text></svg>
-              <span>ORCID</span></a></li>
-            <li><a href="https://github.com/SdotCat-30" target="_blank" rel="noopener">
-              <svg class="ico" viewBox="0 0 16 16" aria-hidden="true"><path fill="currentColor" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg>
-              <span>GitHub</span></a></li>
-            <li><a href="https://www.linkedin.com/in/sanskar-adhikari-97b775298/" target="_blank" rel="noopener">
-              <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><rect width="24" height="24" rx="4" fill="#0A66C2"/><text x="12" y="17" text-anchor="middle" font-family="Arial, sans-serif" font-size="13" font-weight="700" fill="#fff">in</text></svg>
-              <span>LinkedIn</span></a></li>
-          </ul>
-        </nav>
-      </div>
-    </div>
-  </section>
-
-  <!-- ===== Featured research ===== -->
-  <section class="featured" aria-labelledby="featured-title">
-    <div class="wrap">
-      <p class="label" id="featured-title">Featured research</p>
-      <div class="feature-grid">
-        <a class="feature" href="#salt-river">
-          <span class="chip prep">M.S. thesis · in preparation</span>
-          <strong class="metric">+1.8 <small>events / decade</small></strong>
-          <h3>Extreme rainfall in the Salt River Basin</h3>
-          <p>A significant rise in independent extreme-rainfall events, 1981–2024, from non-stationary peaks-over-threshold analysis.</p>
-          <span class="more">Read more →</span>
-        </a>
-        <a class="feature" href="#rain-on-snow">
-          <span class="chip review">Under review · npj Hydrosphere</span>
-          <strong class="metric">~2.5 TB <small>hourly ERA5</small></strong>
-          <h3>Rain-on-snow and surface energy fluxes</h3>
-          <p>Hemispheric rain-on-snow events, 1980–2025, and the role of turbulent heat fluxes in their energy budget.</p>
-          <span class="more">Read more →</span>
-        </a>
-        <a class="feature" href="#atlas-14">
-          <span class="chip review">Under review</span>
-          <strong class="metric">66 <small>Mesonet stations</small></strong>
-          <h3>Kentucky Mesonet vs. NOAA Atlas 14</h3>
-          <p>Precipitation-frequency estimates from 5-minute observations, compared with the design values engineers use.</p>
-          <span class="more">Read more →</span>
-        </a>
-      </div>
-    </div>
-  </section>
-
-  <!-- ===== About ===== -->
-  <section class="block" id="about">
-    <div class="wrap">
-      <div class="section-head">
-        <p class="label">About</p>
-        <h2>From designing water systems to studying the extremes that stress them</h2>
-      </div>
-      <div class="about-grid">
-        <div class="prose">
-          <p>I'm a graduate student in Geoscience at Western Kentucky University, advised by Dr. Zachary J. Suriano. My M.S. thesis asks whether extreme rainfall in Kentucky's Salt River Basin is becoming more frequent, and how antecedent soil moisture shapes the streamflow response when it does.</p>
-          <p>Alongside the thesis, I work on hemispheric rain-on-snow events and their surface energy budgets, and on precipitation-frequency estimates from the Kentucky Mesonet. I also served as a teaching assistant for the METR 121 meteorology lab.</p>
-          <p>Before WKU, I earned a B.E. in Civil Engineering from Tribhuvan University (IOE Pulchowk Campus) and registered as a civil engineer with the Nepal Engineering Council.</p>
-          <div>
-            <p class="label" style="margin-top:8px">Research interests</p>
-            <ul class="interests">
-              <li>Hydroclimatology</li>
-              <li>Extreme precipitation and flooding</li>
-              <li>Compound hydroclimatic events</li>
-              <li>Soil moisture and rainfall–runoff</li>
-              <li>Rain-on-snow processes</li>
-              <li>Climate change and water resources</li>
-            </ul>
-          </div>
-        </div>
-        <figure class="photo" style="margin:0">
+        <figure class="figure photo">
           <img src="assets/img/lab.webp" width="1600" height="1067" loading="lazy" alt="Sanskar working at a workstation in the WKU Climate Research Lab, with precipitation maps on the screens behind him">
           <figcaption>Working in the Climate Research Lab, Western Kentucky University</figcaption>
         </figure>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- ===== Research ===== -->
-  <section class="block" id="research">
-    <div class="wrap">
-      <div class="section-head">
-        <p class="label">Research</p>
-        <h2>Projects</h2>
-        <p>Each project lists my role, where it stands in publication, and selected results. Click any figure to open it full size.</p>
-      </div>
+    <!-- ===== Research ===== -->
+    <section id="research">
+      <h2>Research</h2>
 
-      <!-- Salt River Basin -->
       <article class="project" id="salt-river">
-        <aside class="rail">
-          <span class="chip prep">In preparation</span>
-          <dl>
-            <div><dt>Type</dt><dd>M.S. thesis research</dd></div>
-            <div><dt>Period</dt><dd>Aug 2025 – present</dd></div>
-            <div><dt>Role</dt><dd>Lead researcher</dd></div>
-            <div><dt>Outputs</dt><dd>2 manuscripts in preparation; poster, EPSCoR SuperCollider 2026; AMS Annual Meeting 2027</dd></div>
-          </dl>
-          <div class="links">
-            <a href="https://github.com/SdotCat-30/Extreme-Rainfall-Analysis-in-the-Salt-River-Basin" target="_blank" rel="noopener">Code on GitHub ↗</a>
-          </div>
-        </aside>
-        <div class="body">
-          <h3>Extreme rainfall in the Salt River Basin</h3>
-          <p class="place">Salt River Basin, Kentucky · Climate Research Lab, WKU</p>
-          <p>Are extreme rainfall events in the Salt River Basin becoming more frequent? I apply a non-stationary peaks-over-threshold (POT) framework to 44 years of 4-km PRISM daily precipitation. Thresholds follow the seasonal cycle (adapted from Acero et al., 2011), a basin-coverage criterion flags basin-wide events, and Ferro–Segers declustering separates independent storms. The next stage links these events to streamflow and antecedent soil moisture to study compound hydroclimatic extremes.</p>
-          <ul class="findings">
-            <li>Independent extreme-rainfall events became significantly more frequent from 1981 to 2024: about +1.8 events per decade (Sen's slope; Mann–Kendall p &lt; 0.001), against a mean of 12.8 events per year.</li>
-            <li>Winter, spring, and summer drive the increase. Fall shows no significant trend in frequency, but fall storms carry the largest mean excess above threshold.</li>
-          </ul>
-          <div class="figs">
-            <figure class="fig wide">
-              <a href="assets/img/srb-event-trend.webp" target="_blank" rel="noopener"><img src="assets/img/srb-event-trend.webp" width="1800" height="771" loading="lazy" alt="Bar chart of independent extreme rainfall events per year, 1981 to 2024, showing an increasing trend"></a>
-              <figcaption><b>Annual independent extreme events, 1981–2024.</b> Non-stationary threshold, at least 10% of the basin exceeding its local threshold, Ferro–Segers declustered.</figcaption>
-            </figure>
-          </div>
-        </div>
+        <div class="meta"><span class="status prep">In preparation</span><span>M.S. thesis</span><span>Aug 2025 – present</span><span>Lead researcher</span></div>
+        <h3>Extreme rainfall in the Salt River Basin</h3>
+        <p class="place">Salt River Basin, Kentucky · Climate Research Lab, WKU</p>
+        <p>Are extreme rainfall events in the Salt River Basin becoming more frequent? I apply a non-stationary peaks-over-threshold (POT) framework to 44 years of 4-km PRISM daily precipitation. Thresholds follow the seasonal cycle (adapted from Acero et al., 2011), a basin-coverage criterion flags basin-wide events, and Ferro–Segers declustering separates independent storms. The next stage links these events to streamflow and antecedent soil moisture to study compound hydroclimatic extremes.</p>
+        <ul class="tri-list">
+          <li>Independent extreme-rainfall events became significantly more frequent from 1981 to 2024: about +1.8 events per decade (Sen's slope; Mann–Kendall p &lt; 0.001), against a mean of 12.8 events per year.</li>
+          <li>Winter, spring, and summer drive the increase. Fall shows no significant trend in frequency, but fall storms carry the largest mean excess above threshold.</li>
+        </ul>
+        <figure class="figure">
+          <a href="assets/img/srb-event-trend.webp" target="_blank" rel="noopener"><img src="assets/img/srb-event-trend.webp" width="1800" height="771" loading="lazy" alt="Bar chart of independent extreme rainfall events per year, 1981 to 2024, showing an increasing trend"></a>
+          <figcaption><b>Annual independent extreme events, 1981–2024.</b> Non-stationary threshold, at least 10% of the basin exceeding its local threshold, Ferro–Segers declustered. Click to enlarge.</figcaption>
+        </figure>
+        <p class="more">Outputs: 2 manuscripts in preparation; poster, EPSCoR SuperCollider 2026; AMS Annual Meeting 2027 · <a href="https://github.com/SdotCat-30/Extreme-Rainfall-Analysis-in-the-Salt-River-Basin" target="_blank" rel="noopener">Code on GitHub ↗</a></p>
       </article>
 
-      <!-- Rain-on-snow -->
       <article class="project" id="rain-on-snow">
-        <aside class="rail">
-          <span class="chip review">Under review</span>
-          <dl>
-            <div><dt>Journal</dt><dd><i>npj Hydrosphere</i></dd></div>
-            <div><dt>Period</dt><dd>Aug 2025 – present</dd></div>
-            <div><dt>Role</dt><dd>Co-author; data processing and analysis</dd></div>
-            <div><dt>Outputs</dt><dd>Oral talk, Kentucky Academy of Science 2025</dd></div>
-          </dl>
-          <div class="links">
-            <a href="https://github.com/SdotCat-30/Northen-Hemisphere-Rain-on-Snow-ROS-energy-flux-analysis" target="_blank" rel="noopener">Code on GitHub ↗</a>
-          </div>
-        </aside>
-        <div class="body">
-          <h3>Rain-on-snow events and surface energy fluxes</h3>
-          <p class="place">Northern Hemisphere · Climate Research Lab, WKU</p>
-          <p>Rain falling on snowpack can trigger rapid melt and flooding. Using hourly ERA5 reanalysis from 1980 to 2025, I identified rain-on-snow (ROS) hours across Northern Hemisphere land at three intensity thresholds (0.5, 1.0, and 2.0 mm per hour). I then examined the surface energy budget during those hours: sensible and latent heat, net solar, and net thermal radiation, by region and by elevation.</p>
-          <ul class="findings">
-            <li>Built event catalogs, climatologies, and energy summaries from about 2.5 TB of hourly NetCDF data with Python, xarray, and Dask.</li>
-            <li>Mapped how much of the net energy during ROS comes from turbulent (sensible + latent) heat fluxes. The manuscript argues these fluxes are key to understanding extreme ROS events.</li>
-          </ul>
-        </div>
+        <div class="meta"><span class="status review">Under review</span><span><i>npj Hydrosphere</i></span><span>Aug 2025 – present</span><span>Co-author; data processing and analysis</span></div>
+        <h3>Rain-on-snow events and surface energy fluxes</h3>
+        <p class="place">Northern Hemisphere · Climate Research Lab, WKU</p>
+        <p>Rain falling on snowpack can trigger rapid melt and flooding. Using hourly ERA5 reanalysis from 1980 to 2025, I identified rain-on-snow (ROS) hours across Northern Hemisphere land at three intensity thresholds (0.5, 1.0, and 2.0 mm per hour). I then examined the surface energy budget during those hours: sensible and latent heat, net solar, and net thermal radiation, by region and by elevation.</p>
+        <ul class="tri-list">
+          <li>Built event catalogs, climatologies, and energy summaries from about 2.5 TB of hourly NetCDF data with Python, xarray, and Dask.</li>
+          <li>Mapped how much of the net energy during ROS comes from turbulent (sensible + latent) heat fluxes. The manuscript argues these fluxes are key to understanding extreme ROS events.</li>
+        </ul>
+        <p class="more">Outputs: oral talk, Kentucky Academy of Science 2025 · <a href="https://github.com/SdotCat-30/Northen-Hemisphere-Rain-on-Snow-ROS-energy-flux-analysis" target="_blank" rel="noopener">Code on GitHub ↗</a></p>
       </article>
 
-      <!-- Atlas 14 -->
       <article class="project" id="atlas-14">
-        <aside class="rail">
-          <span class="chip review">Under review</span>
-          <dl>
-            <div><dt>Journal</dt><dd><i>Journal of Applied and Service Climatology</i></dd></div>
-            <div><dt>Role</dt><dd>Co-author, collaborative project</dd></div>
-            <div><dt>Team</dt><dd>Graduate and undergraduate researchers, faculty-supervised</dd></div>
-          </dl>
-        </aside>
-        <div class="body">
-          <h3>Precipitation frequency from the Kentucky Mesonet vs. NOAA Atlas 14</h3>
-          <p class="place">Kentucky · Western Kentucky University</p>
-          <p>Engineers size culverts, bridges, and storm drains with NOAA Atlas 14 precipitation-frequency estimates. We derived intensity–duration–frequency (IDF) statistics directly from high-resolution Kentucky Mesonet observations and compared them with Atlas 14 to see how well the published values hold up across durations.</p>
-          <div class="numbers" aria-label="Study design">
-            <div><strong>66</strong><span>Mesonet stations</span></div>
-            <div><strong>5-min</strong><span>observation interval</span></div>
-            <div><strong>2015–2024</strong><span>record analyzed</span></div>
-            <div><strong>5 min–24 h</strong><span>storm durations</span></div>
-            <div><strong>6 pairs</strong><span>matched Atlas 14 stations</span></div>
-          </div>
-          <ul class="findings">
-            <li>Found duration-dependent differences between station-based and Atlas 14 estimates, with implications for hydrologic design, flood-risk assessment, and regional climate services.</li>
-          </ul>
-        </div>
+        <div class="meta"><span class="status review">Under review</span><span><i>Journal of Applied and Service Climatology</i></span><span>Co-author, collaborative project</span></div>
+        <h3>Precipitation frequency from the Kentucky Mesonet vs. NOAA Atlas 14</h3>
+        <p class="place">Kentucky · Western Kentucky University</p>
+        <p>Engineers size culverts, bridges, and storm drains with NOAA Atlas 14 precipitation-frequency estimates. We derived intensity–duration–frequency (IDF) statistics directly from high-resolution Kentucky Mesonet observations and compared them with Atlas 14 to see how well the published values hold up across durations. The team included graduate and undergraduate researchers under faculty supervision.</p>
+        <p class="facts"><b>66</b> Mesonet stations · <b>5-min</b> observations · <b>2015–2024</b> record · <b>5 min–24 h</b> durations · <b>6</b> matched Atlas 14 station pairs</p>
+        <ul class="tri-list">
+          <li>Found duration-dependent differences between station-based and Atlas 14 estimates, with implications for hydrologic design, flood-risk assessment, and regional climate services.</li>
+        </ul>
       </article>
 
-      <!-- Kankai -->
       <article class="project" id="kankai">
-        <aside class="rail">
-          <span class="chip published">Published 2025</span>
-          <dl>
-            <div><dt>Journal</dt><dd><i>H2Open Journal</i> 8(6), 465–490</dd></div>
-            <div><dt>Role</dt><dd>Second author, undergraduate research team</dd></div>
-            <div><dt>Institution</dt><dd>Tribhuvan University, IOE Pulchowk Campus</dd></div>
-          </dl>
-          <div class="links">
-            <a href="https://doi.org/10.2166/h2oj.2025.027" target="_blank" rel="noopener">Read the paper (open access) ↗</a>
-          </div>
-        </aside>
-        <div class="body">
-          <h3>Climate change and hydropower in the Kankai River Basin</h3>
-          <p class="place">Kankai River Basin, eastern Nepal</p>
-          <p>Nepal depends on run-of-river hydropower, so changes in streamflow translate directly into changes in energy supply. We forced a calibrated and validated SWAT model with bias-corrected projections from six CMIP6 global climate models under SSP2-4.5 and SSP5-8.5, then estimated energy generation at three hydropower projects through 2100.</p>
-          <ul class="findings">
-            <li>Annual precipitation rises by up to 42% under SSP5-8.5 by the end of the century, and streamflow follows.</li>
-            <li>Energy generation dips in the near future, then increases in the mid and far future, most strongly under SSP5-8.5.</li>
-            <li>Year-to-year swings in generation call for climate-resilient planning of run-of-river projects.</li>
-          </ul>
-          <div class="figs">
-            <figure class="fig wide">
-              <a href="assets/img/kankai-graphical-abstract.webp" target="_blank" rel="noopener"><img src="assets/img/kankai-graphical-abstract.webp" width="1320" height="740" loading="lazy" alt="Graphical abstract: CMIP6 models with linear scaling feed a calibrated SWAT model, leading to projected increases in streamflow and fluctuating hydropower generation"></a>
-              <figcaption><b>Graphical abstract.</b> From Poudel, Adhikari, Karki &amp; Regmi (2025), <i>H2Open Journal</i>, CC BY 4.0.</figcaption>
-            </figure>
-          </div>
-        </div>
+        <div class="meta"><span class="status published">Published 2025</span><span><i>H2Open Journal</i> 8(6), 465–490</span><span>Second author</span></div>
+        <h3>Climate change and hydropower in the Kankai River Basin</h3>
+        <p class="place">Kankai River Basin, eastern Nepal · Tribhuvan University, IOE Pulchowk Campus</p>
+        <p>Nepal depends on run-of-river hydropower, so changes in streamflow translate directly into changes in energy supply. We forced a calibrated and validated SWAT model with bias-corrected projections from six CMIP6 global climate models under SSP2-4.5 and SSP5-8.5, then estimated energy generation at three hydropower projects through 2100.</p>
+        <ul class="tri-list">
+          <li>Annual precipitation rises by up to 42% under SSP5-8.5 by the end of the century, and streamflow follows.</li>
+          <li>Energy generation dips in the near future, then increases in the mid and far future, most strongly under SSP5-8.5.</li>
+          <li>Year-to-year swings in generation call for climate-resilient planning of run-of-river projects.</li>
+        </ul>
+        <figure class="figure">
+          <a href="assets/img/kankai-graphical-abstract.webp" target="_blank" rel="noopener"><img src="assets/img/kankai-graphical-abstract.webp" width="1320" height="740" loading="lazy" alt="Graphical abstract: CMIP6 models with linear scaling feed a calibrated SWAT model, leading to projected increases in streamflow and fluctuating hydropower generation"></a>
+          <figcaption><b>Graphical abstract.</b> From Poudel, Adhikari, Karki &amp; Regmi (2025), <i>H2Open Journal</i>, CC BY 4.0.</figcaption>
+        </figure>
+        <p class="more"><a href="https://doi.org/10.2166/h2oj.2025.027" target="_blank" rel="noopener">Read the paper (open access) ↗</a></p>
       </article>
 
-      <!-- Water supply -->
       <article class="project" id="water-supply">
-        <aside class="rail">
-          <span class="chip done">Completed 2024</span>
-          <dl>
-            <div><dt>Type</dt><dd>B.E. thesis (final-year project)</dd></div>
-            <div><dt>Role</dt><dd>Team lead, six-member team</dd></div>
-            <div><dt>Supervisor</dt><dd>Assoc. Prof. Shukra Raj Paudel</dd></div>
-          </dl>
-        </aside>
-        <div class="body">
-          <h3>Design of a dual water supply system</h3>
-          <p class="place">Gitanagar, Nagarkot, Nepal · IOE Pulchowk Campus</p>
-          <p>We designed a combined pumping and gravity-fed water supply system for a 20-year design period, from field surveys, population projections, and demand assessment through to intake, treatment, storage, and distribution.</p>
-          <ul class="findings">
-            <li>Designed sedimentation, rapid sand filtration, and chlorination units and storage reservoirs.</li>
-            <li>Modeled the distribution network in WaterGEMS and prepared drawings in AutoCAD and ArcGIS.</li>
-            <li>Estimated a project cost of about NPR 43.1 million.</li>
-          </ul>
-        </div>
+        <div class="meta"><span class="status done">Completed 2024</span><span>B.E. thesis</span><span>Team lead, six-member team</span></div>
+        <h3>Design of a dual water supply system</h3>
+        <p class="place">Gitanagar, Nagarkot, Nepal · IOE Pulchowk Campus · Supervisor: Assoc. Prof. Shukra Raj Paudel</p>
+        <p>We designed a combined pumping and gravity-fed water supply system for a 20-year design period, from field surveys, population projections, and demand assessment through to intake, treatment, storage, and distribution.</p>
+        <ul class="tri-list">
+          <li>Designed sedimentation, rapid sand filtration, and chlorination units and storage reservoirs.</li>
+          <li>Modeled the distribution network in WaterGEMS and prepared drawings in AutoCAD and ArcGIS.</li>
+          <li>Estimated a project cost of about NPR 43.1 million.</li>
+        </ul>
       </article>
-    </div>
-  </section>
+    </section>
 
-  <!-- ===== Publications ===== -->
-  <section class="block" id="publications">
-    <div class="wrap">
-      <div class="section-head">
-        <p class="label">Publications</p>
-        <h2>Papers and manuscripts</h2>
-      </div>
-      <div class="pubs">
-        <div class="pub-group">
-          <h3>Peer-reviewed</h3>
-          <ol>
-            <li>
-              <div class="pub">
-                <p class="pub-title"><a href="https://doi.org/10.2166/h2oj.2025.027" target="_blank" rel="noopener">Climate change and hydropower resilience: A CMIP6–SWAT analysis of the Kankai River Basin's energy landscape</a></p>
-                <p class="pub-authors">Poudel, U., <span class="me">Adhikari, S.</span>, Karki, S., &amp; Regmi, R. K.</p>
-                <p class="pub-venue"><i>H2Open Journal</i> 8(6), 465–490 · 2025 · <a href="https://doi.org/10.2166/h2oj.2025.027" target="_blank" rel="noopener">DOI ↗</a></p>
-              </div>
-              <span class="chip published">Published</span>
-            </li>
-          </ol>
-        </div>
-        <div class="pub-group">
-          <h3>Under review</h3>
-          <ol>
-            <li>
-              <div class="pub">
-                <p class="pub-title">Turbulent heat fluxes are key to understanding extreme Northern Hemispheric rain-on-snow events</p>
-                <p class="pub-authors">Suriano, Z. J., <span class="me">Adhikari, S.</span>, &amp; Dixon, R. D.</p>
-                <p class="pub-venue"><i>npj Hydrosphere</i></p>
-              </div>
-              <span class="chip review">Under review</span>
-            </li>
-            <li>
-              <div class="pub">
-                <p class="pub-title">On the frequency of snow and ice damming potential in the Mid-South, United States</p>
-                <p class="pub-authors">Suriano, Z. J., Hall, J., &amp; <span class="me">Adhikari, S.</span></p>
-                <p class="pub-venue"><i>Cold Regions Science and Technology</i></p>
-              </div>
-              <span class="chip review">Under review</span>
-            </li>
-            <li>
-              <div class="pub">
-                <p class="pub-title">A comparison of Atlas 14 to precipitation frequency statistics derived from the Kentucky Mesonet</p>
-                <p class="pub-authors">Pinkrah, N. O., <span class="me">Adhikari, S.</span>, Tobbe, P., &amp; Suriano, Z. J.</p>
-                <p class="pub-venue"><i>Journal of Applied and Service Climatology</i></p>
-              </div>
-              <span class="chip review">Under review</span>
-            </li>
-          </ol>
-        </div>
-        <div class="pub-group">
-          <h3>In preparation</h3>
-          <ol>
-            <li>
-              <div class="pub">
-                <p class="pub-title">Role of antecedent soil moisture conditions during compound hydroclimatic extremes: Rainfall and streamflow events in the Salt River Basin, Kentucky</p>
-                <p class="pub-authors"><span class="me">Adhikari, S.</span>, &amp; Suriano, Z. J.</p>
-              </div>
-              <span class="chip prep">In preparation</span>
-            </li>
-            <li>
-              <div class="pub">
-                <p class="pub-title">Non-stationary peak-over-threshold study of changes in extreme rainfall events in the Salt River Basin, Kentucky</p>
-                <p class="pub-authors"><span class="me">Adhikari, S.</span>, Polk, J., Fan, X., &amp; Suriano, Z. J.</p>
-              </div>
-              <span class="chip prep">In preparation</span>
-            </li>
-          </ol>
-        </div>
-      </div>
-    </div>
-  </section>
+    <!-- ===== Publications ===== -->
+    <section id="publications">
+      <h2>Publications</h2>
+      <p style="margin:-12px 0 28px;color:var(--muted)">Also on <a href="https://scholar.google.com/citations?user=SVxeQQUAAAAJ&amp;hl=en" target="_blank" rel="noopener">Google Scholar</a>.</p>
 
-  <!-- ===== Presentations ===== -->
-  <section class="block" id="presentations">
-    <div class="wrap">
-      <div class="section-head">
-        <p class="label">Presentations</p>
-        <h2>Conference talks and posters</h2>
+      <div class="pub-group">
+        <span class="label">Peer-reviewed</span>
+        <div class="pub">
+          <p class="pub-title"><a href="https://doi.org/10.2166/h2oj.2025.027" target="_blank" rel="noopener">Climate change and hydropower resilience: A CMIP6–SWAT analysis of the Kankai River Basin's energy landscape</a></p>
+          <p class="pub-venue">Published in <i>H2Open Journal</i> 8(6), 465–490, 2025 · <a href="https://doi.org/10.2166/h2oj.2025.027" target="_blank" rel="noopener">DOI ↗</a></p>
+          <p class="pub-authors">Poudel, U., <span class="me">Adhikari, S.</span>, Karki, S., &amp; Regmi, R. K.</p>
+        </div>
       </div>
-      <div class="talks">
-        <figure class="talk">
-          <img src="assets/img/supercollider-2026-poster.webp" width="1400" height="1050" loading="lazy" alt="Sanskar presenting his poster at the EPSCoR SuperCollider in Lexington, Kentucky">
-          <div class="info">
-            <div class="kind"><span class="chip done">Poster</span><span class="label">Sep 25, 2026 · Lexington, KY</span></div>
-            <h3>Analysis of Extreme Hydroclimatic Events: Rainfall and Streamflow in the Salt River Basin, KY</h3>
-            <p>EPSCoR SuperCollider</p>
-          </div>
-        </figure>
-        <figure class="talk portrait-shot">
-          <img src="assets/img/kas-2025-oral.webp" width="1000" height="1333" loading="lazy" alt="Sanskar giving an oral presentation on energy fluxes during rain-on-snow events at the Kentucky Academy of Science conference">
-          <div class="info">
-            <div class="kind"><span class="chip done">Oral</span><span class="label">Nov 22, 2025 · Louisville, KY</span></div>
-            <h3>Role of Energy Fluxes During Rain-on-Snow Events Across the Northern Hemisphere</h3>
-            <p>Kentucky Academy of Science Conference, University of Louisville</p>
-          </div>
-        </figure>
-      </div>
-      <div class="upcoming">
-        <span class="label">Upcoming · Jan 2027</span>
-        <p>American Meteorological Society Annual Meeting, Denver, CO: presenting Salt River Basin thesis research, supported by a WKU Graduate Student Research/Travel Grant.</p>
-      </div>
-    </div>
-  </section>
 
-  <!-- ===== Experience ===== -->
-  <section class="block" id="experience">
-    <div class="wrap">
-      <div class="section-head">
-        <p class="label">Experience</p>
-        <h2>Education, teaching, and recognition</h2>
-      </div>
-      <div class="two-col">
-        <div>
-          <p class="label col-title">Education</p>
-          <div class="entry">
-            <div class="head"><b>M.S., Geoscience</b><span class="when">Aug 2025 – present</span></div>
-            <p>Western Kentucky University, Bowling Green, KY. Advisor: Zachary J. Suriano, Ph.D.</p>
-          </div>
-          <div class="entry">
-            <div class="head"><b>B.E., Civil Engineering</b><span class="when">Nov 2019 – Mar 2024</span></div>
-            <p>Tribhuvan University, IOE Pulchowk Campus, Lalitpur, Nepal</p>
-          </div>
+      <div class="pub-group">
+        <span class="label">Under review</span>
+        <div class="pub">
+          <p class="pub-title">Turbulent heat fluxes are key to understanding extreme Northern Hemispheric rain-on-snow events</p>
+          <p class="pub-venue"><span class="status review">Under review</span> &nbsp;<i>npj Hydrosphere</i></p>
+          <p class="pub-authors">Suriano, Z. J., <span class="me">Adhikari, S.</span>, &amp; Dixon, R. D.</p>
         </div>
-        <div>
-          <p class="label col-title">Positions and recognition</p>
-          <div class="entry">
-            <div class="head"><b>Graduate Research Assistant</b><span class="when">Aug 2025 – present</span></div>
-            <p>Climate Research Lab, Western Kentucky University</p>
-          </div>
-          <div class="entry">
-            <div class="head"><b>Graduate Teaching Assistant, METR 121</b><span class="when">Aug 2025 – May 2026</span></div>
-            <p>Introduction to Meteorology lab: in-person and Zoom lab sessions, assignments, concept checks, and quizzes.</p>
-          </div>
-          <div class="entry">
-            <div class="head"><b>Graduate Student Research/Travel Grant</b><span class="when">2026</span></div>
-            <p>Office of Research &amp; Creative Activity, WKU</p>
-          </div>
-          <div class="entry">
-            <div class="head"><b>Registered Civil Engineer</b><span class="when">2024</span></div>
-            <p>Nepal Engineering Council (NEC)</p>
-          </div>
+        <div class="pub">
+          <p class="pub-title">On the frequency of snow and ice damming potential in the Mid-South, United States</p>
+          <p class="pub-venue"><span class="status review">Under review</span> &nbsp;<i>Cold Regions Science and Technology</i></p>
+          <p class="pub-authors">Suriano, Z. J., Hall, J., &amp; <span class="me">Adhikari, S.</span></p>
+        </div>
+        <div class="pub">
+          <p class="pub-title">A comparison of Atlas 14 to precipitation frequency statistics derived from the Kentucky Mesonet</p>
+          <p class="pub-venue"><span class="status review">Under review</span> &nbsp;<i>Journal of Applied and Service Climatology</i></p>
+          <p class="pub-authors">Pinkrah, N. O., <span class="me">Adhikari, S.</span>, Tobbe, P., &amp; Suriano, Z. J.</p>
         </div>
       </div>
-    </div>
-  </section>
 
-  <!-- ===== Skills ===== -->
-  <section class="block" id="skills">
-    <div class="wrap">
-      <div class="section-head">
-        <p class="label">Skills</p>
-        <h2>Technical toolkit</h2>
-      </div>
-      <div class="skills">
-        <div class="skill">
-          <h3>Programming</h3>
-          <ul><li>Python</li><li>pandas</li><li>NumPy</li><li>xarray</li><li>Dask</li><li>GeoPandas</li><li>SciPy</li><li>Matplotlib</li><li>Cartopy</li><li>R</li><li>Jupyter</li><li>Git / GitHub</li></ul>
+      <div class="pub-group">
+        <span class="label">In preparation</span>
+        <div class="pub">
+          <p class="pub-title">Role of antecedent soil moisture conditions during compound hydroclimatic extremes: Rainfall and streamflow events in the Salt River Basin, Kentucky</p>
+          <p class="pub-authors"><span class="me">Adhikari, S.</span>, &amp; Suriano, Z. J.</p>
         </div>
-        <div class="skill">
-          <h3>Climate and hydrologic data</h3>
-          <ul><li>ERA5 / ERA5-Land</li><li>PRISM</li><li>CMIP6</li><li>USGS NWIS</li><li>Kentucky Mesonet</li><li>NetCDF</li></ul>
-        </div>
-        <div class="skill">
-          <h3>Modeling and statistics</h3>
-          <ul><li>SWAT</li><li>HEC-HMS</li><li>Peaks-over-threshold</li><li>IDF analysis</li><li>Mann–Kendall</li><li>Sen's slope</li><li>Time-series statistics</li></ul>
-        </div>
-        <div class="skill">
-          <h3>GIS and engineering</h3>
-          <ul><li>ArcGIS Pro</li><li>QGIS</li><li>WaterGEMS</li><li>AutoCAD</li><li>CROPWAT</li></ul>
+        <div class="pub">
+          <p class="pub-title">Non-stationary peak-over-threshold study of changes in extreme rainfall events in the Salt River Basin, Kentucky</p>
+          <p class="pub-authors"><span class="me">Adhikari, S.</span>, Polk, J., Fan, X., &amp; Suriano, Z. J.</p>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- ===== Contact ===== -->
-  <section class="contact" id="contact">
-    <div class="wrap">
-      <div>
-        <h2>Get in touch</h2>
+    <!-- ===== Presentations ===== -->
+    <section id="presentations">
+      <h2>Presentations</h2>
+      <div class="talk">
+        <a class="thumb" href="assets/img/supercollider-2026-poster.webp" target="_blank" rel="noopener"><img src="assets/img/supercollider-2026-poster.webp" width="1400" height="1050" loading="lazy" alt="Sanskar presenting his poster at the EPSCoR SuperCollider in Lexington, Kentucky"></a>
+        <div class="info">
+          <span class="label">Poster · Sep 25, 2026 · Lexington, KY</span>
+          <h3>Analysis of Extreme Hydroclimatic Events: Rainfall and Streamflow in the Salt River Basin, KY</h3>
+          <p>EPSCoR SuperCollider</p>
+        </div>
+      </div>
+      <div class="talk portrait-shot">
+        <a class="thumb" href="assets/img/kas-2025-oral.webp" target="_blank" rel="noopener"><img src="assets/img/kas-2025-oral.webp" width="1000" height="1333" loading="lazy" alt="Sanskar giving an oral presentation on energy fluxes during rain-on-snow events at the Kentucky Academy of Science conference"></a>
+        <div class="info">
+          <span class="label">Oral · Nov 22, 2025 · Louisville, KY</span>
+          <h3>Role of Energy Fluxes During Rain-on-Snow Events Across the Northern Hemisphere</h3>
+          <p>Kentucky Academy of Science Conference, University of Louisville</p>
+        </div>
+      </div>
+      <div class="news" style="margin-top:20px">
+        <p><b>Upcoming · Jan 2027:</b> American Meteorological Society Annual Meeting, Denver, CO: presenting Salt River Basin thesis research, supported by a WKU Graduate Student Research/Travel Grant.</p>
+      </div>
+    </section>
+
+    <!-- ===== Experience ===== -->
+    <section id="experience">
+      <h2>Experience</h2>
+      <p class="sub" style="margin-top:0">Education</p>
+      <div class="entry">
+        <b>M.S., Geoscience</b><span class="when">Aug 2025 – present</span>
+        <p>Western Kentucky University, Bowling Green, KY. Advisor: Zachary J. Suriano, Ph.D.</p>
+      </div>
+      <div class="entry">
+        <b>B.E., Civil Engineering</b><span class="when">Nov 2019 – Mar 2024</span>
+        <p>Tribhuvan University, IOE Pulchowk Campus, Lalitpur, Nepal</p>
+      </div>
+      <p class="sub" style="margin-top:24px">Positions and recognition</p>
+      <div class="entry">
+        <b>Graduate Research Assistant</b><span class="when">Aug 2025 – present</span>
+        <p>Climate Research Lab, Western Kentucky University</p>
+      </div>
+      <div class="entry">
+        <b>Graduate Teaching Assistant, METR 121</b><span class="when">Aug 2025 – May 2026</span>
+        <p>Introduction to Meteorology lab: in-person and Zoom lab sessions, assignments, concept checks, and quizzes.</p>
+      </div>
+      <div class="entry">
+        <b>Graduate Student Research/Travel Grant</b><span class="when">2026</span>
+        <p>Office of Research &amp; Creative Activity, WKU</p>
+      </div>
+      <div class="entry">
+        <b>Registered Civil Engineer</b><span class="when">2024</span>
+        <p>Nepal Engineering Council (NEC)</p>
+      </div>
+    </section>
+
+    <!-- ===== Skills ===== -->
+    <section id="skills">
+      <h2>Skills</h2>
+      <dl class="skills">
+        <dt>Programming</dt><dd>Python (pandas, NumPy, xarray, Dask, GeoPandas, SciPy, Matplotlib, Cartopy), R, Jupyter, Git / GitHub</dd>
+        <dt>Climate and hydrologic data</dt><dd>ERA5 / ERA5-Land, PRISM, CMIP6, USGS NWIS, Kentucky Mesonet, NetCDF</dd>
+        <dt>Modeling and statistics</dt><dd>SWAT, HEC-HMS, peaks-over-threshold, IDF analysis, Mann–Kendall, Sen's slope, time-series statistics</dd>
+        <dt>GIS and engineering</dt><dd>ArcGIS Pro, QGIS, WaterGEMS, AutoCAD, CROPWAT</dd>
+      </dl>
+    </section>
+
+    <!-- ===== Contact ===== -->
+    <section id="contact">
+      <h2>Contact</h2>
+      <div class="prose">
         <p>I'm happy to talk about hydroclimate research, collaborations, or graduate opportunities.</p>
-        <p class="email" style="margin-top:12px">sanskar.adhikari280@topper.wku.edu</p>
+        <p class="contact-line"><a href="mailto:sanskar.adhikari280@topper.wku.edu">sanskar.adhikari280@topper.wku.edu</a></p>
+        <p>Find my work on <a href="https://scholar.google.com/citations?user=SVxeQQUAAAAJ&amp;hl=en" target="_blank" rel="noopener">Google Scholar</a>, <a href="https://orcid.org/0009-0004-6719-0520" target="_blank" rel="noopener">ORCID</a>, and <a href="https://github.com/SdotCat-30" target="_blank" rel="noopener">GitHub</a>, or download my <a href="assets/Sanskar_Adhikari_CV.pdf" target="_blank" rel="noopener">academic CV</a>.</p>
       </div>
-      <div class="actions">
-        <a class="btn primary" href="mailto:sanskar.adhikari280@topper.wku.edu">Email me</a>
-        <a class="btn" href="assets/Sanskar_Adhikari_CV.pdf" target="_blank" rel="noopener">Academic CV</a>
-        <a class="btn" href="https://scholar.google.com/citations?user=SVxeQQUAAAAJ&amp;hl=en" target="_blank" rel="noopener">Google Scholar</a>
-        <a class="btn" href="https://orcid.org/0009-0004-6719-0520" target="_blank" rel="noopener">ORCID</a>
-      </div>
-    </div>
-  </section>
-</main>
+    </section>
+  </main>
+</div>
 
 <footer>
   <div class="wrap">© 2026 Sanskar Adhikari · Bowling Green, Kentucky. Kankai River Basin graphical abstract from Poudel et al. (2025), <i>H2Open Journal</i>, used under CC BY 4.0.</div>
 </footer>
 
 <script>
-  // Highlight the nav link for the section currently in view, and fade the menu's
-  // right edge on phones while more links are hidden off-screen.
+  // Highlight the nav link for the section in view; fade the menu's right edge while links are hidden.
   (function () {
     var nav = document.querySelector('.site-nav');
     function edge() { nav.classList.toggle('more-right', nav.scrollLeft + nav.clientWidth < nav.scrollWidth - 4); }
@@ -915,7 +520,7 @@ footer::before { content: ""; position: absolute; left: 0; right: 0; top: 0; hei
           }
         }
       });
-    }, { rootMargin: '-45% 0px -50% 0px' });
+    }, { rootMargin: '-40% 0px -55% 0px' });
     Object.keys(byId).forEach(function (id) { var el = document.getElementById(id); if (el) io.observe(el); });
   })();
 </script>
