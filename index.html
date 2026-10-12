@@ -5,6 +5,16 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Sanskar Adhikari</title>
 <meta name="description" content="Sanskar Adhikari: graduate researcher in hydroclimatology at Western Kentucky University. Extreme precipitation, compound hydroclimatic events, and rain-on-snow processes.">
+<link rel="canonical" href="https://sdotcat-30.github.io/">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://sdotcat-30.github.io/">
+<meta property="og:title" content="Sanskar Adhikari · Hydroclimatology Research">
+<meta property="og:description" content="Graduate researcher at Western Kentucky University studying extreme rainfall, compound hydroclimatic events, and rain-on-snow processes.">
+<meta property="og:image" content="https://sdotcat-30.github.io/assets/img/og-image.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Sanskar Adhikari working in the WKU Climate Research Lab">
+<meta name="twitter:card" content="summary_large_image">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,500;6..72,600&family=Public+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
@@ -86,56 +96,87 @@ p { margin: 0; }
 .site-nav { display: flex; gap: 4px; margin-left: auto; overflow-x: auto; scrollbar-width: none; }
 .site-nav::-webkit-scrollbar { display: none; }
 .site-nav a {
+  display: inline-flex; align-items: center; min-height: 40px;
   color: var(--muted); text-decoration: none; font-size: 0.92rem; font-weight: 500;
-  padding: 6px 10px; border-radius: var(--radius); white-space: nowrap;
+  padding: 0 10px; border-radius: var(--radius); white-space: nowrap;
 }
 .site-nav a:hover { color: var(--ink); background: var(--accent-soft); }
 .site-nav a.is-active { color: var(--accent); background: var(--accent-soft); }
+.site-nav a.cv-link { color: var(--accent); border: 1px solid var(--accent); margin-left: 6px; }
 @media (max-width: 760px) {
   .site-head .wrap { flex-direction: column; align-items: stretch; gap: 2px; padding-block: 10px 6px; }
   .site-nav { margin-left: -10px; }
-  html { scroll-padding-top: 104px; }
+  /* fade the right edge while more menu items are off-screen */
+  .site-nav.more-right { -webkit-mask-image: linear-gradient(90deg, #000 78%, transparent); mask-image: linear-gradient(90deg, #000 78%, transparent); }
+  html { scroll-padding-top: 112px; }
 }
 
 /* ---------- hero ---------- */
-.hero { padding-block: 56px 40px; }
-.hero .wrap { display: grid; grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr); gap: 48px; align-items: center; }
-.hero-text { display: grid; gap: 18px; min-width: 0; }
+.hero { padding-block: 56px 48px; }
+.hero .wrap { display: grid; grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr); gap: 48px; align-items: start; }
+.hero-text { display: grid; gap: 16px; min-width: 0; padding-top: 24px; }
 .hero h1 { font-size: var(--step-3); }
-.hero .role { font-size: var(--step-1); color: var(--muted); line-height: 1.45; max-width: 38ch; }
-.hero .bio { max-width: 62ch; }
+.hero .role { font: 500 var(--step-1)/1.4 var(--font-body); color: var(--accent); }
+.hero .bio { max-width: 58ch; font-size: 1.06rem; }
+.focus { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px; }
+.focus li { border: 1px solid var(--accent); color: var(--accent); border-radius: 999px; padding: 4px 12px; font-size: 0.86rem; font-weight: 500; }
 .actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 6px; }
 .btn {
-  display: inline-flex; align-items: center; gap: 8px;
-  padding: 9px 16px; border-radius: var(--radius);
+  display: inline-flex; align-items: center; gap: 8px; min-height: 42px;
+  padding: 0 16px; border-radius: var(--radius);
   font-weight: 600; font-size: 0.93rem; text-decoration: none;
   border: 1px solid var(--rule); color: var(--ink); background: var(--surface);
 }
 .btn:hover { border-color: var(--accent); color: var(--accent); }
 .btn.primary { background: var(--accent); border-color: var(--accent); color: var(--bg); }
 .btn.primary:hover { filter: brightness(1.08); color: var(--bg); }
-.portrait { margin: 0; border-radius: var(--radius); overflow: hidden; border: 1px solid var(--rule); max-width: 400px; justify-self: end; width: 100%; }
+.latest { display: grid; gap: 6px; margin-top: 10px; padding: 14px 16px; border: 1px solid var(--rule); border-radius: var(--radius); background: var(--surface); max-width: 60ch; }
+.latest p { font-size: 0.95rem; line-height: 1.45; }
+.latest p a { color: var(--ink); font-weight: 500; text-decoration-color: var(--rule); }
+.latest p a:hover { color: var(--accent); }
+.latest .latest-meta { color: var(--muted); font-size: 0.86rem; }
+.latest .latest-meta a { color: var(--accent); font-weight: 400; }
+.hero-side { display: grid; gap: 18px; justify-items: end; min-width: 0; }
+.portrait { margin: 0; border-radius: var(--radius); overflow: hidden; border: 1px solid var(--rule); max-width: 360px; width: 100%; }
 .portrait img { aspect-ratio: 9 / 10; object-fit: cover; width: 100%; }
 .portrait figcaption { font-size: 0.8rem; color: var(--muted); padding: 8px 12px; background: var(--surface); }
+.profiles { width: 100%; max-width: 360px; display: grid; gap: 8px; }
+.profiles ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 2px; }
+.profiles a {
+  display: flex; align-items: center; gap: 12px; min-height: 44px; padding: 0 10px;
+  border-radius: var(--radius); color: var(--ink); text-decoration: none; font-weight: 500;
+}
+.profiles a:hover { background: var(--accent-soft); color: var(--accent); }
+.profiles a::after { content: "↗"; margin-left: auto; color: var(--muted); font-size: 0.85rem; }
+.ico { width: 22px; height: 22px; flex: none; }
 @media (max-width: 760px) {
-  .hero { padding-block: 32px 24px; }
-  .hero .wrap { grid-template-columns: minmax(0, 1fr); gap: 28px; }
-  .portrait { justify-self: start; max-width: 320px; }
+  .hero { padding-block: 28px 32px; }
+  .hero .wrap { grid-template-columns: minmax(0, 1fr); gap: 24px; }
+  .hero-text { padding-top: 0; }
+  .hero-side { justify-items: start; }
+  .profiles { order: -1; max-width: none; }
+  .profiles ul { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 4px 8px; }
+  .profiles a { border: 1px solid var(--rule); background: var(--surface); gap: 8px; padding: 0 8px; font-size: 0.92rem; white-space: nowrap; }
+  .profiles a::after { content: none; }
+  .portrait { max-width: 320px; }
 }
 
-/* the record: datasets this work is built on */
-.record { border-block: 1px solid var(--rule); background: var(--surface); }
-.record .wrap { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); }
-.record div.cell { padding: 18px 16px; display: grid; gap: 4px; border-left: 1px solid var(--rule); }
-.record div.cell:first-child { border-left: 0; padding-left: 0; }
-.record strong { font: 500 1.35rem/1.2 var(--font-mono); font-variant-numeric: tabular-nums; color: var(--accent); }
-.record span { font-size: 0.86rem; color: var(--muted); line-height: 1.4; }
-@media (max-width: 760px) {
-  .record .wrap { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .record div.cell { border-left: 0; padding-left: 0; }
-  .record div.cell:nth-child(even) { padding-left: 16px; border-left: 1px solid var(--rule); }
-  .record div.cell:nth-child(n+3) { border-top: 1px solid var(--rule); }
+/* ---------- featured research ---------- */
+.featured { border-block: 1px solid var(--rule); background: var(--surface); padding-block: 28px 32px; }
+.featured .label { margin-bottom: 14px; }
+.feature-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+.feature {
+  display: grid; gap: 10px; align-content: start; padding: 18px; border: 1px solid var(--rule); border-radius: var(--radius);
+  background: var(--bg); color: var(--ink); text-decoration: none; transition: border-color .15s, transform .15s;
 }
+.feature:hover { border-color: var(--accent); transform: translateY(-2px); }
+@media (prefers-reduced-motion: reduce) { .feature, .feature:hover { transition: none; transform: none; } }
+.feature .metric { font: 500 1.6rem/1.1 var(--font-mono); color: var(--accent); font-variant-numeric: tabular-nums; }
+.feature .metric small { font-size: 0.8rem; color: var(--muted); font-weight: 400; }
+.feature h3 { font-size: var(--step-1); }
+.feature p { color: var(--muted); font-size: 0.92rem; line-height: 1.5; }
+.feature .more { color: var(--accent); font-weight: 600; font-size: 0.9rem; }
+@media (max-width: 900px) { .feature-grid { grid-template-columns: minmax(0, 1fr); } }
 
 /* ---------- sections ---------- */
 section.block { padding-block: 64px 8px; }
@@ -175,7 +216,7 @@ section.block { padding-block: 64px 8px; }
 /* projects */
 .project {
   display: grid; grid-template-columns: 220px minmax(0, 1fr); gap: 36px;
-  padding-block: 36px; border-top: 1px solid var(--rule);
+  padding-block: 52px; border-top: 1px solid var(--rule);
 }
 .project:first-of-type { border-top: 0; padding-top: 4px; }
 .project .rail { display: grid; gap: 14px; align-content: start; position: sticky; top: 84px; }
@@ -183,7 +224,7 @@ section.block { padding-block: 64px 8px; }
 .rail dt { font: 500 0.7rem/1.3 var(--font-mono); letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
 .rail dd { margin: 2px 0 0; font-size: 0.9rem; line-height: 1.45; }
 .rail .links { display: grid; gap: 6px; font-size: 0.9rem; }
-.project .body { display: grid; gap: 16px; min-width: 0; }
+.project .body { display: grid; gap: 12px; min-width: 0; }
 .project h3 { font-size: var(--step-2); }
 .project .place { color: var(--muted); font-size: 0.95rem; margin-top: -8px; }
 .project .body > p { max-width: 68ch; }
@@ -217,9 +258,13 @@ section.block { padding-block: 64px 8px; }
   display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 8px 20px; align-items: start;
   background: var(--surface); border: 1px solid var(--rule); border-radius: var(--radius); padding: 14px 16px;
 }
-.pub-group li p { max-width: 80ch; }
-.pub-group .me { font-weight: 600; }
-.pub-group .venue { font-style: italic; }
+.pub { display: grid; gap: 4px; min-width: 0; max-width: 80ch; }
+.pub-title { font: 600 1.12rem/1.35 var(--font-display); color: var(--ink); }
+.pub-title a { color: inherit; text-decoration-color: var(--rule); }
+.pub-title a:hover { color: var(--accent); text-decoration-color: currentColor; }
+.pub-authors { font-size: 0.92rem; color: var(--muted); }
+.pub-venue { font-size: 0.88rem; color: var(--muted); }
+.pub-group .me { font-weight: 600; color: var(--ink); }
 @media (max-width: 760px) { .pub-group li { grid-template-columns: 1fr; } }
 
 /* presentations */
@@ -277,7 +322,9 @@ footer { padding-block: 22px calc(22px + env(safe-area-inset-bottom, 0px)); font
       <a href="#presentations">Presentations</a>
       <a href="#experience">Experience</a>
       <a href="#skills">Skills</a>
-      <a href="#contact">Contact</a>    </nav>
+      <a href="#contact">Contact</a>
+      <a class="cv-link" href="assets/Sanskar_Adhikari_CV.pdf" target="_blank" rel="noopener">CV (PDF)</a>
+    </nav>
   </div>
 </header>
 
@@ -287,31 +334,81 @@ footer { padding-block: 22px calc(22px + env(safe-area-inset-bottom, 0px)); font
   <section class="hero">
     <div class="wrap">
       <div class="hero-text">
-        <p class="label">Hydroclimatology · Western Kentucky University</p>
         <h1>Sanskar Adhikari</h1>
-        <p class="role">M.S. Geoscience student and Graduate Research Assistant in the Climate Research Lab</p>
-        <p class="bio">I study extreme precipitation and the conditions that turn it into floods: compound rainfall–streamflow events, antecedent soil moisture, and rain-on-snow. My work combines long climate records, reanalysis data, and reproducible Python workflows. I trained as a civil engineer in Nepal, where I worked on climate change impacts on hydropower and led the design of a rural water supply system.</p>
+        <p class="role">Graduate Researcher · Hydroclimatology &amp; Water Resources</p>
+        <p class="label">M.S. Geoscience · Climate Research Lab, Western Kentucky University</p>
+        <p class="bio">I investigate extreme rainfall, compound hydroclimatic events, and rain-on-snow processes using climate observations, hydrological modeling, and computational analysis.</p>
+        <ul class="focus" aria-label="Research focus">
+          <li>Extreme precipitation</li>
+          <li>Compound events</li>
+          <li>Rain-on-snow</li>
+        </ul>
         <div class="actions">
-          <a class="btn primary" href="#research">See my research</a>          <a class="btn" href="https://github.com/SdotCat-30" target="_blank" rel="noopener">GitHub</a>
-          <a class="btn" href="https://www.linkedin.com/in/sanskar-adhikari-97b775298/" target="_blank" rel="noopener">LinkedIn</a>
+          <a class="btn primary" href="#research">Explore research</a>
+          <a class="btn" href="assets/Sanskar_Adhikari_CV.pdf" target="_blank" rel="noopener">View academic CV</a>
+          <a class="btn" href="https://scholar.google.com/citations?user=SVxeQQUAAAAJ&amp;hl=en" target="_blank" rel="noopener">Google Scholar</a>
+        </div>
+        <div class="latest">
+          <span class="chip published">Latest publication</span>
+          <p><a href="https://doi.org/10.2166/h2oj.2025.027" target="_blank" rel="noopener">Climate change and hydropower resilience: A CMIP6–SWAT analysis of the Kankai River Basin's energy landscape</a></p>
+          <p class="latest-meta"><i>H2Open Journal</i>, 2025 · <a href="#publications">All publications</a></p>
         </div>
       </div>
-      <figure class="portrait">
-        <img src="assets/img/profile.webp" width="900" height="1010" alt="Sanskar Adhikari standing outside the Environmental Sciences and Technology building at Western Kentucky University">
-        <figcaption>Ogden College of Science, WKU</figcaption>
-      </figure>
+      <div class="hero-side">
+        <figure class="portrait">
+          <img src="assets/img/profile.webp" width="900" height="1010" alt="Sanskar Adhikari standing outside the Environmental Sciences and Technology building at Western Kentucky University">
+          <figcaption>Ogden College of Science, WKU</figcaption>
+        </figure>
+        <nav class="profiles" aria-label="Academic profiles">
+          <p class="label">Academic profiles</p>
+          <ul>
+            <li><a href="https://scholar.google.com/citations?user=SVxeQQUAAAAJ&amp;hl=en" target="_blank" rel="noopener">
+              <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path fill="#4285F4" d="M12 3 1 9.5l4 2.36V17c0 .3.1.6.4.8C7.4 19.2 9.6 20 12 20s4.6-.8 6.6-2.2c.3-.2.4-.5.4-.8v-5.14l2-1.18V16h2V9.5z"/><circle cx="12" cy="14" r="2.6" fill="#fff"/></svg>
+              <span>Google Scholar</span></a></li>
+            <li><a href="https://orcid.org/0009-0004-6719-0520" target="_blank" rel="noopener">
+              <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="11" fill="#A6CE39"/><text x="12" y="16.2" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" font-weight="700" fill="#fff">iD</text></svg>
+              <span>ORCID</span></a></li>
+            <li><a href="https://github.com/SdotCat-30" target="_blank" rel="noopener">
+              <svg class="ico" viewBox="0 0 16 16" aria-hidden="true"><path fill="currentColor" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg>
+              <span>GitHub</span></a></li>
+            <li><a href="https://www.linkedin.com/in/sanskar-adhikari-97b775298/" target="_blank" rel="noopener">
+              <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><rect width="24" height="24" rx="4" fill="#0A66C2"/><text x="12" y="17" text-anchor="middle" font-family="Arial, sans-serif" font-size="13" font-weight="700" fill="#fff">in</text></svg>
+              <span>LinkedIn</span></a></li>
+          </ul>
+        </nav>
+      </div>
     </div>
   </section>
 
-  <!-- the data behind the work -->
-  <div class="record" aria-label="Data behind the research">
+  <!-- ===== Featured research ===== -->
+  <section class="featured" aria-labelledby="featured-title">
     <div class="wrap">
-      <div class="cell"><strong>1981–2024</strong><span>PRISM 4-km daily precipitation, Salt River Basin</span></div>
-      <div class="cell"><strong>~2.5 TB</strong><span>Hourly ERA5 reanalysis processed for rain-on-snow</span></div>
-      <div class="cell"><strong>66</strong><span>Kentucky Mesonet stations, 5-minute rainfall</span></div>
-      <div class="cell"><strong>6 GCMs</strong><span>CMIP6 projections driving a SWAT model</span></div>
+      <p class="label" id="featured-title">Featured research</p>
+      <div class="feature-grid">
+        <a class="feature" href="#salt-river">
+          <span class="chip prep">M.S. thesis · in preparation</span>
+          <strong class="metric">+1.8 <small>events / decade</small></strong>
+          <h3>Extreme rainfall in the Salt River Basin</h3>
+          <p>A significant rise in independent extreme-rainfall events, 1981–2024, from non-stationary peaks-over-threshold analysis.</p>
+          <span class="more">Read more →</span>
+        </a>
+        <a class="feature" href="#rain-on-snow">
+          <span class="chip review">Under review · npj Hydrosphere</span>
+          <strong class="metric">~2.5 TB <small>hourly ERA5</small></strong>
+          <h3>Rain-on-snow and surface energy fluxes</h3>
+          <p>Hemispheric rain-on-snow events, 1980–2025, and the role of turbulent heat fluxes in their energy budget.</p>
+          <span class="more">Read more →</span>
+        </a>
+        <a class="feature" href="#atlas-14">
+          <span class="chip review">Under review</span>
+          <strong class="metric">66 <small>Mesonet stations</small></strong>
+          <h3>Kentucky Mesonet vs. NOAA Atlas 14</h3>
+          <p>Precipitation-frequency estimates from 5-minute observations, compared with the design values engineers use.</p>
+          <span class="more">Read more →</span>
+        </a>
+      </div>
     </div>
-  </div>
+  </section>
 
   <!-- ===== About ===== -->
   <section class="block" id="about">
@@ -504,7 +601,11 @@ footer { padding-block: 22px calc(22px + env(safe-area-inset-bottom, 0px)); font
           <h3>Peer-reviewed</h3>
           <ol>
             <li>
-              <p>Poudel, U., <span class="me">Adhikari, S.</span>, Karki, S., &amp; Regmi, R. K. (2025). Climate change and hydropower resilience: A CMIP6–SWAT analysis of the Kankai River Basin's energy landscape. <span class="venue">H2Open Journal, 8</span>(6), 465–490. <a href="https://doi.org/10.2166/h2oj.2025.027" target="_blank" rel="noopener">doi.org/10.2166/h2oj.2025.027</a></p>
+              <div class="pub">
+                <p class="pub-title"><a href="https://doi.org/10.2166/h2oj.2025.027" target="_blank" rel="noopener">Climate change and hydropower resilience: A CMIP6–SWAT analysis of the Kankai River Basin's energy landscape</a></p>
+                <p class="pub-authors">Poudel, U., <span class="me">Adhikari, S.</span>, Karki, S., &amp; Regmi, R. K.</p>
+                <p class="pub-venue"><i>H2Open Journal</i> 8(6), 465–490 · 2025 · <a href="https://doi.org/10.2166/h2oj.2025.027" target="_blank" rel="noopener">DOI ↗</a></p>
+              </div>
               <span class="chip published">Published</span>
             </li>
           </ol>
@@ -513,15 +614,27 @@ footer { padding-block: 22px calc(22px + env(safe-area-inset-bottom, 0px)); font
           <h3>Under review</h3>
           <ol>
             <li>
-              <p>Suriano, Z. J., <span class="me">Adhikari, S.</span>, &amp; Dixon, R. D. Turbulent heat fluxes are key to understanding extreme Northern Hemispheric rain-on-snow events. <span class="venue">npj Hydrosphere</span>.</p>
+              <div class="pub">
+                <p class="pub-title">Turbulent heat fluxes are key to understanding extreme Northern Hemispheric rain-on-snow events</p>
+                <p class="pub-authors">Suriano, Z. J., <span class="me">Adhikari, S.</span>, &amp; Dixon, R. D.</p>
+                <p class="pub-venue"><i>npj Hydrosphere</i></p>
+              </div>
               <span class="chip review">Under review</span>
             </li>
             <li>
-              <p>Suriano, Z. J., Hall, J., &amp; <span class="me">Adhikari, S.</span> On the frequency of snow and ice damming potential in the Mid-South, United States. <span class="venue">Cold Regions Science and Technology</span>.</p>
+              <div class="pub">
+                <p class="pub-title">On the frequency of snow and ice damming potential in the Mid-South, United States</p>
+                <p class="pub-authors">Suriano, Z. J., Hall, J., &amp; <span class="me">Adhikari, S.</span></p>
+                <p class="pub-venue"><i>Cold Regions Science and Technology</i></p>
+              </div>
               <span class="chip review">Under review</span>
             </li>
             <li>
-              <p>Pinkrah, N. O., <span class="me">Adhikari, S.</span>, Tobbe, P., &amp; Suriano, Z. J. A comparison of Atlas 14 to precipitation frequency statistics derived from the Kentucky Mesonet. <span class="venue">Journal of Applied and Service Climatology</span>.</p>
+              <div class="pub">
+                <p class="pub-title">A comparison of Atlas 14 to precipitation frequency statistics derived from the Kentucky Mesonet</p>
+                <p class="pub-authors">Pinkrah, N. O., <span class="me">Adhikari, S.</span>, Tobbe, P., &amp; Suriano, Z. J.</p>
+                <p class="pub-venue"><i>Journal of Applied and Service Climatology</i></p>
+              </div>
               <span class="chip review">Under review</span>
             </li>
           </ol>
@@ -530,11 +643,17 @@ footer { padding-block: 22px calc(22px + env(safe-area-inset-bottom, 0px)); font
           <h3>In preparation</h3>
           <ol>
             <li>
-              <p><span class="me">Adhikari, S.</span>, &amp; Suriano, Z. J. Role of antecedent soil moisture conditions during compound hydroclimatic extremes: Rainfall and streamflow events in the Salt River Basin, Kentucky.</p>
+              <div class="pub">
+                <p class="pub-title">Role of antecedent soil moisture conditions during compound hydroclimatic extremes: Rainfall and streamflow events in the Salt River Basin, Kentucky</p>
+                <p class="pub-authors"><span class="me">Adhikari, S.</span>, &amp; Suriano, Z. J.</p>
+              </div>
               <span class="chip prep">In preparation</span>
             </li>
             <li>
-              <p><span class="me">Adhikari, S.</span>, Polk, J., Fan, X., &amp; Suriano, Z. J. Non-stationary peak-over-threshold study of changes in extreme rainfall events in the Salt River Basin, Kentucky.</p>
+              <div class="pub">
+                <p class="pub-title">Non-stationary peak-over-threshold study of changes in extreme rainfall events in the Salt River Basin, Kentucky</p>
+                <p class="pub-authors"><span class="me">Adhikari, S.</span>, Polk, J., Fan, X., &amp; Suriano, Z. J.</p>
+              </div>
               <span class="chip prep">In preparation</span>
             </li>
           </ol>
@@ -654,8 +773,10 @@ footer { padding-block: 22px calc(22px + env(safe-area-inset-bottom, 0px)); font
         <p class="email" style="margin-top:12px">sanskar.adhikari280@topper.wku.edu</p>
       </div>
       <div class="actions">
-        <a class="btn primary" href="mailto:sanskar.adhikari280@topper.wku.edu">Email me</a>        <a class="btn" href="https://github.com/SdotCat-30" target="_blank" rel="noopener">GitHub</a>
-        <a class="btn" href="https://www.linkedin.com/in/sanskar-adhikari-97b775298/" target="_blank" rel="noopener">LinkedIn</a>
+        <a class="btn primary" href="mailto:sanskar.adhikari280@topper.wku.edu">Email me</a>
+        <a class="btn" href="assets/Sanskar_Adhikari_CV.pdf" target="_blank" rel="noopener">Academic CV</a>
+        <a class="btn" href="https://scholar.google.com/citations?user=SVxeQQUAAAAJ&amp;hl=en" target="_blank" rel="noopener">Google Scholar</a>
+        <a class="btn" href="https://orcid.org/0009-0004-6719-0520" target="_blank" rel="noopener">ORCID</a>
       </div>
     </div>
   </section>
@@ -666,8 +787,15 @@ footer { padding-block: 22px calc(22px + env(safe-area-inset-bottom, 0px)); font
 </footer>
 
 <script>
-  // Highlight the nav link for the section currently in view.
+  // Highlight the nav link for the section currently in view, and fade the menu's
+  // right edge on phones while more links are hidden off-screen.
   (function () {
+    var nav = document.querySelector('.site-nav');
+    function edge() { nav.classList.toggle('more-right', nav.scrollLeft + nav.clientWidth < nav.scrollWidth - 4); }
+    nav.addEventListener('scroll', edge, { passive: true });
+    window.addEventListener('resize', edge);
+    edge();
+
     var links = Array.prototype.slice.call(document.querySelectorAll('.site-nav a[href^="#"]'));
     var byId = {};
     links.forEach(function (a) { byId[a.getAttribute('href').slice(1)] = a; });
@@ -679,7 +807,10 @@ footer { padding-block: 22px calc(22px + env(safe-area-inset-bottom, 0px)); font
         var a = byId[e.target.id];
         if (a) {
           a.classList.add('is-active');
-          if (a.scrollIntoView && window.innerWidth < 760) a.scrollIntoView({ block: 'nearest', inline: 'center' });
+          if (window.innerWidth < 760) {
+            var r = a.getBoundingClientRect(), n = nav.getBoundingClientRect();
+            nav.scrollLeft += (r.left - n.left) - (nav.clientWidth - r.width) / 2;
+          }
         }
       });
     }, { rootMargin: '-45% 0px -50% 0px' });
